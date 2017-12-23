@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+
+    <resultMap id="UserAuthorEntityMap" type="UserAuthorEntity">
+        <id property="SerialNO" column="SerialNO"></id>
+        <result property="Extend1" column="Extend1"></result>
+        <result property="Extend2" column="Extend2"></result>
+    
+        <association property="userEntity" javaType="UserEntity">
+            <id property="userId" column="userId"></id>
+            <result property="loginName" column="loginName"></result>
+            <result property="password" column="password"></result>
+            <result property="userName" column="userName"></result>
+            <result property="phoneNumber" column="phoneNumber"></result>
+            <result property="email" column="email"></result>
+            <result property="createTime" column="createTime"></result>
+            <result property="loginTime" column="loginTime"></result>
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </association>
+
+
+        <association property="authorEntity" javaType="AuthorEntity">
+            <id property="authorId" column="authorId"></id>
+            <result property="authorName" column="authorName"></result>
+            <result property="authorPid" column="authorPid"></result>
+            <result property="authorDescribe" column="authorDescribe"></result>
+            <result property="authorUrl" column="authorUrl"></result>
+            <result property="isParent" column="isParent"></result>
+            <!--<result property="authorMenu" column="authorMenu"></result>-->
+            <!--<result property="menuId" column="menuId"></result>-->
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </association>
+
+
+    </resultMap>
+    <select id="UserQueryAuthorAccordion" resultType="com.vo.UserAuthorVo" parameterType="int">
+        SELECT a.authorId,a.authorName,a.authorPid,a.authorUrl,a.isParent,b.authorMenu FROM author a
+        inner JOIN userauthor b
+        on a.authorId=b.authorId
+        where b.userId=#{userId}
+
+    </select>
+
+
+
+
+
+</mapper>
