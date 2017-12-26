@@ -14,13 +14,21 @@
     <script src="/statics/bootstrap/js/jquery.min.js"></script>
     <script src="/statics/bootstrap/js/bootstrap.min.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table.js"></script>
+    <script src="/statics/bootstrap/js/bootstrap-editable.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+    <script src="/statics/bootstrap/js/bootstrap-table-editable.js"></script>
+
     <script src="/statics/definition/userManage.js"></script>
 </head>
 <style type="text/css">
-    #toolBar{
-        margin-left: 1%;
+
+    body{
+        height: 70%;
         margin-top: 4%;
+    }
+    .rightInput{
+        margin-left: 75%;
+        margin-top: -3%;
     }
 
 </style>
@@ -32,25 +40,32 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             增加
         </button>
+
         <button type="button" id="del" class="btn btn-default navbar-btn">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             删除
         </button>
+
         <button type="button" id="save" class="btn btn-default navbar-btn">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             保存
         </button>
+
         <button type="button" id="" class="btn btn-default navbar-btn">
             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
             撤销
         </button>
 
-        <div class="form-group">
-            <label for="exampleInputName2">Name</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-        </div>
+        <%--<form class="form-inline" id="userForm">--%>
+            <%--<div class="form-group rightInput">--%>
+                <%--<label for="exampleInputName2">UserName</label>--%>
+                <%--<input type="text" name="userName" class="form-control" id="exampleInputName2" placeholder=" Please input user name">--%>
+            <%--</div>--%>
+        <%--</form>--%>
+        <%----%>
     </div>
 
-<table id="fundTable"></table>
+
+<table id="userTable"></table>
 </body>
 </html>

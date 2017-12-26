@@ -5,6 +5,7 @@ import com.service.UserService;
 import com.vo.UserAuthorVo;
 import com.vo.UserRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,20 +109,76 @@ public class UserController {
 
     //查询所有用户
     @RequestMapping("queryUserAll")
-    public void QueryUserAll(HttpServletResponse response) throws IOException {
+    public void QueryUserAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html");
+        UserEntity userEntity=new UserEntity();
 
-        List<UserEntity> userEntityList=userService.queryUserAll();
+        List<UserEntity> userEntityList=userService.queryUserAll(userEntity);
         response.getWriter().write(JSON.toJSONString(userEntityList));
     }
 
+    //增加用户
+    @RequestMapping("addUser")
+    public void AddUser(HttpServletRequest request,HttpServletResponse response,UserEntity userEntity) throws Exception {
+        request.setCharacterEncoding("utf-8");
+        UserEntity user=new UserEntity();
+        user.setLoginName(userEntity.getLoginName());
+        user.setPassword(userEntity.getPassword());
+        user.setUserName(userEntity.getUserName());
+        user.setPhoneNumber(userEntity.getPhoneNumber());
+        user.setEmail(userEntity.getEmail());
+        user.setCreateTime(userEntity.getCreateTime());
+
+        try{
+            int n=userService.addUser(user);
+            response.getWriter().write("{\"success\":\"success\"}");
+        }catch (Exception e){
+            response.getWriter().write("{\"error\":\"error\"}");
+            e.printStackTrace();
+        }
 
 
 
-public void Test(){
+    }
 
-}
+
+    //修改用户
+    @RequestMapping("updateUser")
+    public void UpdateUser(HttpServletRequest request,HttpServletResponse response,UserEntity userEntity)throws Exception{
+        request.setCharacterEncoding("utf-8");
+        UserEntity user=new UserEntity();
+        user.setLoginName(userEntity.getLoginName());
+        user.setPassword(userEntity.getPassword());
+        user.setUserName(userEntity.getUserName());
+        user.setPhoneNumber(userEntity.getPhoneNumber());
+        user.setEmail(userEntity.getEmail());
+        user.setCreateTime(userEntity.getCreateTime());
+        user.setUserId(userEntity.getUserId());
+        try{
+            int n=userService.updateUser(user);
+            response.getWriter().write("{\"success\":\"success\"}");
+        }catch (Exception e){
+            response.getWriter().write("{\"error\":\"error\"}");
+            e.printStackTrace();
+        }
+    }
+
+
+    //删除用户
+    @RequestMapping("delUser")
+    public void delUser(HttpServletRequest request,HttpServletResponse response)throws IOException{
+        String userId=request.getParameter("userId");
+
+        try{
+            int n=userService.delUser(Integer.parseInt(userId));
+            response.getWriter().write("{\"success\":\"success\"}");
+        }catch (Exception e){
+            response.getWriter().write("{\"error\":\"error\"}");
+            e.printStackTrace();
+        }
+
+    }
 
 
 

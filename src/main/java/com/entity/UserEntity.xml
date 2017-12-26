@@ -43,43 +43,53 @@
     </resultMap>
 
 
-
+    <!--查询登录 -->
     <select id="userLogin" resultType="UserEntity" parameterType="UserEntity">
         select * from `user` WHERE loginName=#{loginName} AND password=#{password}
     </select>
 
+
+    <!--查询所有用户 -->
     <select id="queryUserAll" resultType="UserEntity" parameterType="UserEntity" >
-        select * from `user`
-        <where>
-            <if test="UserEntity!=null">
-                <if test="UserEntity.userName!=null">
-                    AND UserEntity.userName=#{UserEntity.userName}
-                </if>
-                
-            </if>
-            
-        </where>
-        
+        select * from `user` WHERE 1=1
+        <if test="userName!=null">
+            AND userName  LIKE CONCAT(CONCAT('%',#{userName}),'%')
+        </if>
     </select>
 
+    <!--修改用户信息-->
+    <update id="updateUser" parameterType="UserEntity"  >
+        UPDATE `user` SET loginName=#{loginName},password=#{password},userName=#{userName},phoneNumber=#{phoneNumber},email=#{email} WHERE userId=#{userId}
+    </update>
+
+    <!--增加用户-->
+    <insert id="addUser" parameterType="UserEntity">
+        INSERT INTO `user`(loginName,password,userName,phoneNumber,email,createTime) VALUES (#{loginName},#{password},#{userName},#{phoneNumber},#{email},#{createTime})
+    </insert>
 
 
-    <!--<select id="selectAll" resultType="com.entity.UserEntity" >-->
-        <!--select * from `user`-->
-    <!--</select>-->
+    <!--删除用户-->
+    <delete id="delUser" parameterType="int">
+        DELETE FROM `user` where userId = #{userId}
+    </delete>
 
-    <!--<update id="updatePerson" parameterType="StudentEntity"  >-->
-        <!--UPDATE `user` SET uname=#{uname},upwd=#{upwd},utime=#{utime} WHERE uid=#{uid}-->
-    <!--</update>-->
 
-    <!--<insert id="addPerson" parameterType="StudentEntity">-->
-        <!--INSERT INTO `user`(uname,upwd,utime) VALUES (#{uname},#{upwd},#{utime})-->
 
-    <!--</insert>-->
 
-    <!--<delete id="delPerson" parameterType="int">-->
-        <!--DELETE FROM `user` where uid = #{uid}-->
 
-    <!--</delete>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

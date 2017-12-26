@@ -18,7 +18,17 @@ public interface UserDao {
     //用户对角色查询做菜单
     public List<UserRoleVo> UserQueryRoleAccordion(int userId);
 
-    //查询所有用户
-    public List<UserEntity> queryUserAll();
+    //带条件查询所有用户
+    public List<UserEntity> queryUserAll(UserEntity userEntity);
+
+    //修改用户信息
+    public int updateUser(UserEntity userEntity);
+
+    //增加用户
+    public int addUser(UserEntity userEntity);
+
+    //删除用户
+    public int delUser(int userId);
+
 
 }

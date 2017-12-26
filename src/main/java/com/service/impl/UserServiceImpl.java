@@ -29,9 +29,19 @@ public class UserServiceImpl implements UserService {
         return userDao.UserQueryRoleAccordion(userId);
     }
 
-    public List<UserEntity> queryUserAll() {
-        return userDao.queryUserAll();
+    public List<UserEntity> queryUserAll(UserEntity userEntity) {
+        return userDao.queryUserAll(userEntity);
     }
 
+    public int updateUser(UserEntity userEntity) {
+       return userDao.updateUser(userEntity);
+    }
 
+    public int addUser(UserEntity userEntity) {
+        return userDao.addUser(userEntity);
+    }
+
+    public int delUser(int userId) {
+        return userDao.delUser(userId);
+    }
 }
