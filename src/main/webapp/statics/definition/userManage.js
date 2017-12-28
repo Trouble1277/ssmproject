@@ -1,5 +1,31 @@
 $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
 $(function () {
+
+    var MenuV=JSON.parse($.session.get("authorMenu"));
+    var mm=MenuV.split(",") ;
+    if (mm[0]==1||mm[1]==1||mm[2]==1){
+        $("#add").show();
+        $("#save").show();
+        $("#cancel").show();
+        $("#save").click(function () {
+            console.log("click");
+        })
+        console.log("m ----")
+    }
+    if (mm[0]==2||mm[1]==2||mm[2]==2){
+        $("#del").show();
+        console.log("h ----")
+    }
+    if (mm[0]==3||mm[1]==3||mm[2]==3){
+        $("#save").show();
+        $("#cancel").show();
+    }
+
+    console.log(mm[0]+"mm");
+    console.log(mm[1]+"mm");
+    console.log(mm[2]+"mm");
+
+
     $('#userTable').bootstrapTable({
         url: '/queryUserAll.xhtml',
         method:"get",
@@ -36,7 +62,8 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
             }
 
 
@@ -49,7 +76,9 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
+
             }
 
         }, {
@@ -61,7 +90,8 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
             }
 
         },{
@@ -73,7 +103,8 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
             }
 
         },{
@@ -85,7 +116,8 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
             }
 
         },{
@@ -103,11 +135,17 @@ $(function () {
                 title: '用户名',
                 validate: function (v) {
                     if (!v) return '用户名不能为空';
-                }
+                },
+                mode:"inline",
             }
 
         },],
     });
+
+
+
+
+
 
 });
 
@@ -118,3 +156,4 @@ function DoubleClick(row, $element,filed) {
     console.log($element);
 
 }
+

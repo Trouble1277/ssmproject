@@ -7,6 +7,7 @@
     <link href="../statics/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="../statics/bootstrap/js/jquery.min.js"></script>
     <script src="../statics/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../statics/js/jquerysession.js"></script>
     <script src="../statics/definition/index.js"></script>
 
 </head>

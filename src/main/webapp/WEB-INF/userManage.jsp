@@ -18,6 +18,7 @@
     <script src="/statics/bootstrap/js/bootstrap-table-zh-CN.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table-editable.js"></script>
 
+    <script src="../statics/js/jquerysession.js"></script>
     <script src="/statics/definition/userManage.js"></script>
 </head>
 <style type="text/css">
@@ -36,22 +37,22 @@
 
 <body>
     <div id="toolBar">
-        <button type="button" id="add" class="btn btn-default navbar-btn">
+        <button type="button" id="add" class="btn btn-default navbar-btn" style="display: none">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             增加
         </button>
 
-        <button type="button" id="del" class="btn btn-default navbar-btn">
+        <button type="button" id="del" class="btn btn-default navbar-btn" style="display: none">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             删除
         </button>
 
-        <button type="button" id="save" class="btn btn-default navbar-btn">
+        <button type="button" id="save" class="btn btn-default navbar-btn" style="display: none">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             保存
         </button>
 
-        <button type="button" id="" class="btn btn-default navbar-btn">
+        <button type="button" id="cancel" class="btn btn-default navbar-btn" style="display: none">
             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
             撤销
         </button>

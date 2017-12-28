@@ -38,15 +38,9 @@ $(function () {
                 $("#accordion").html(html);
 
 
-
-
-
                 //在节点加载完之后执行节点事件
                 $(".AccordionPanel").click(function () {
                     var TabText=$(this).text();//获取到手风琴点击到tab值
-
-
-
                     var TabElement= $("#tab_content").children()//获取到标签页tab里面的所有子节点
                     var panel=$("#panel_content").children();//获取面板div里面所有的面板
                     var Flag=false;
@@ -88,6 +82,23 @@ $(function () {
                             $("#tab_content").append(tabHtml);//将点击的手风琴追加到标签页中
                             // $("#PanelIframe").attr("src",UrlText);
                             $("#panel_content").append(PanelHtml);//将页面嵌套到面板中去
+
+
+                            //获取menu的author
+                            $.each(data,function (MenuAuthor,menuVal) {
+                                // console.log(menuVal.authorMenu);
+                                if (TabText==menuVal.authorName){
+                                    $.session.set('authorMenu',JSON.stringify(menuVal.authorMenu));
+
+                                }
+
+
+                            })
+
+
+
+
+
                         }
 
 
