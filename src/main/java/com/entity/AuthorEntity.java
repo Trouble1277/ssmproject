@@ -4,9 +4,9 @@ import java.util.List;
 
 public class AuthorEntity {
 
-    private int authorId;//权限id
-    private String authorName;//权限名字
-    private int authorPid;//权限父id
+    private int id;//权限id
+    private String name;//权限名字
+    private int pid;//权限父id
     private String authorDescribe;//权限描述
     private String authorUrl;
     private boolean isParent;
@@ -21,14 +21,10 @@ public class AuthorEntity {
     private List<UserEntity> userEntityList;
     private List<RoleEntity> roleEntityList;
 
-
-    public AuthorEntity() {
-    }
-
-    public AuthorEntity(int authorId, String authorName, int authorPid, String authorDescribe, String authorUrl, boolean isParent, String extend1, String extend2, List<UserEntity> userEntityList, List<RoleEntity> roleEntityList) {
-        this.authorId = authorId;
-        this.authorName = authorName;
-        this.authorPid = authorPid;
+    public AuthorEntity(int id, String name, int pid, String authorDescribe, String authorUrl, boolean isParent, String extend1, String extend2, List<UserEntity> userEntityList, List<RoleEntity> roleEntityList) {
+        this.id = id;
+        this.name = name;
+        this.pid = pid;
         this.authorDescribe = authorDescribe;
         this.authorUrl = authorUrl;
         this.isParent = isParent;
@@ -41,9 +37,9 @@ public class AuthorEntity {
     @Override
     public String toString() {
         return "AuthorEntity{" +
-                "authorId=" + authorId +
-                ", authorName='" + authorName + '\'' +
-                ", authorPid=" + authorPid +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pid=" + pid +
                 ", authorDescribe='" + authorDescribe + '\'' +
                 ", authorUrl='" + authorUrl + '\'' +
                 ", isParent=" + isParent +
@@ -54,28 +50,31 @@ public class AuthorEntity {
                 '}';
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public AuthorEntity() {
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public int getId() {
+        return id;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public String getName() {
+        return name;
     }
 
-    public int getAuthorPid() {
-        return authorPid;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAuthorPid(int authorPid) {
-        this.authorPid = authorPid;
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public String getAuthorDescribe() {

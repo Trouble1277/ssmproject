@@ -24,9 +24,9 @@
 
 
         <association property="authorEntity" javaType="AuthorEntity">
-            <id property="authorId" column="authorId"></id>
-            <result property="authorName" column="authorName"></result>
-            <result property="authorPid" column="authorPid"></result>
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="pid" column="pid"></result>
             <result property="authorDescribe" column="authorDescribe"></result>
             <result property="authorUrl" column="authorUrl"></result>
             <result property="isParent" column="isParent"></result>
@@ -38,15 +38,27 @@
 
 
     </resultMap>
+
+    <!--查询用户对应权限的手风琴-->
     <select id="UserQueryAuthorAccordion" resultType="com.vo.UserAuthorVo" parameterType="int">
-        SELECT a.authorId,a.authorName,a.authorPid,a.authorUrl,a.isParent,b.authorMenu FROM author a
+        SELECT a.id,a.name,a.pid,a.authorUrl,a.isParent,b.authorMenu FROM author a
         inner JOIN userauthor b
-        on a.authorId=b.authorId
+        on a.id=b.id
         where b.userId=#{userId}
 
     </select>
 
 
+
+    <!--增加用户权限-->
+    <insert id="addUserAuthor" parameterType="UserAuthorEntity">
+        INSERT INTO userauthor(userId,id,authorMenu) VALUES (#{userEntity.userId},#{authorEntity.id},#{authorMenu})
+    </insert>
+
+    <!--根据用户id删除用户权限-->
+    <delete id="delUserAuthor" parameterType="int">
+        DELETE FROM userauthor where userId = #{userId}
+    </delete>
 
 
 

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.UserDao">
 
-    <resultMap id="UserRoleEntityMap" type="UserAuthorEntity">
+    <resultMap id="UserRoleEntityMap" type="UserRoleEntity">
         <id property="SerialNO" column="SerialNO"></id>
         <result property="Extend1" column="Extend1"></result>
         <result property="Extend2" column="Extend2"></result>
@@ -37,17 +37,42 @@
     </resultMap>
 
 
+    <!--根据用户查询角色的权限-->
     <select id="UserQueryRoleAccordion" resultType="com.vo.UserRoleVo" parameterType="int">
-         SELECT a.roleId,a.roleName,d.authorId,d.authorName,d.authorPid,d.authorUrl,d.isParent,b.authorMenu FROM role a
+         SELECT a.roleId,a.roleName,d.id,d.name,d.pid,d.authorUrl,d.isParent,b.authorMenu FROM role a
             INNER JOIN roleauthor b
             on a.roleId=b.roleId
             INNER JOIN userrole c
             on a.roleId=c.roleId
             INNER JOIN author d
-            on b.authorId=d.authorId
+            on b.id=d.id
             where c.userId=#{userId}
 
     </select>
+
+    <!--根据用户查询角色-->
+    <select id="queryUserRole" resultType="com.vo.UserRoleVo" parameterType="int">
+        select b.roleId,roleName from role a
+        left join userrole b
+        on a.roleId=b.roleId
+        where b.userId=#{userId}
+    </select>
+
+    <!--增加用户角色-->
+    <insert id="addUserRole" parameterType="UserRoleEntity">
+        INSERT INTO userrole (userId,roleId) VALUES (#{userEntity.userId},#{roleEntity.roleId})
+    </insert>
+
+    <!--删除用户角色-->
+    <delete id="delUserRole" parameterType="int">
+        DELETE FROM userrole where userId = #{userId}
+    </delete>
+
+
+
+
+
+
 
 
 </mapper>

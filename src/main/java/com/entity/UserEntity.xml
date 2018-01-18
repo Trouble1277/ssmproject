@@ -27,9 +27,9 @@
         </collection>
 
         <collection property="authorEntityList" ofType="AuthorEntity">
-            <id property="authorId" column="authorId"></id>
-            <result property="authorName" column="authorName"></result>
-            <result property="authorPid" column="authorPid"></result>
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="pid" column="pid"></result>
             <result property="authorDescribe" column="authorDescribe"></result>
             <result property="authorUrl" column="authorUrl"></result>
             <result property="isParent" column="isParent"></result>
@@ -49,21 +49,44 @@
     </select>
 
 
-    <!--查询所有用户 -->
-    <select id="queryUserAll" resultType="UserEntity" parameterType="UserEntity" >
-        select * from `user` WHERE 1=1
-        <if test="userName!=null">
-            AND userName  LIKE CONCAT(CONCAT('%',#{userName}),'%')
-        </if>
+    <!--根据用户查询他的所有的权限-->
+    <select id="queryUserAllAuthor" resultType="com.vo.UserAuthorVo" parameterType="int">
+
+        select * from (
+        select e.id,e.pid,e.name,e.authorUrl,e.isParent,ra.authorMenu
+         from userrole ur,roleauthor ra,author e
+         where ra.id = e.id and ur.roleId = ra.roleId and ur.userId=#{userId}
+         union
+        select e.id,e.pid,e.name,e.authorUrl,e.isParent,ua.authorMenu
+         from userauthor ua,author e
+         where ua.id = e.id and ua.userId=#{userId}) as auid
     </select>
 
-    <!--修改用户信息-->
-    <update id="updateUser" parameterType="UserEntity"  >
-        UPDATE `user` SET loginName=#{loginName},password=#{password},userName=#{userName},phoneNumber=#{phoneNumber},email=#{email} WHERE userId=#{userId}
-    </update>
+
+
+
+
+    <!--查询所有用户 -->
+    <select id="queryUserAll" resultMap="UserRoleAuthorMap" parameterType="Map">
+--  select a.*,b.roleId ,c.roleName from `user` a left join userrole b on a.userId=b.userId left join role c on b.roleId=c.roleId LIMIT 5,5
+        select * from `user`
+        WHERE 1=1 LIMIT ${start},${end}
+
+    </select>
+
+    <!--查询总数-->
+    <select id="queryUserAllCount" resultType="int" parameterType="Map">
+        select count(*) from `user`
+
+
+    </select>
+
+
+
+
 
     <!--增加用户-->
-    <insert id="addUser" parameterType="UserEntity">
+    <insert id="addUser" parameterType="UserEntity" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO `user`(loginName,password,userName,phoneNumber,email,createTime) VALUES (#{loginName},#{password},#{userName},#{phoneNumber},#{email},#{createTime})
     </insert>
 
@@ -75,7 +98,10 @@
 
 
 
-
+    <!--修改用户信息-->
+    <update id="updateUser" parameterType="UserEntity"  >
+        UPDATE `user` SET password=#{password},userName=#{userName},phoneNumber=#{phoneNumber},email=#{email} WHERE userId=#{userId}
+    </update>
 
 
 

@@ -3,9 +3,9 @@ package com.vo;
 public class UserRoleVo {
     private int roleId;
     private String roleName;
-    private int authorId;//权限id
-    private String authorName;//权限名字
-    private int authorPid;//权限父id
+    private int id;//权限id
+    private String name;//权限名字
+    private int pid;//权限父id
     private String authorUrl;
     private boolean isParent;
     private String authorMenu;//增删改操作
@@ -13,12 +13,12 @@ public class UserRoleVo {
     public UserRoleVo() {
     }
 
-    public UserRoleVo(int roleId, String roleName, int authorId, String authorName, int authorPid, String authorUrl, boolean isParent, String authorMenu) {
+    public UserRoleVo(int roleId, String roleName, int id, String name, int pid, String authorUrl, boolean isParent, String authorMenu) {
         this.roleId = roleId;
         this.roleName = roleName;
-        this.authorId = authorId;
-        this.authorName = authorName;
-        this.authorPid = authorPid;
+        this.id = id;
+        this.name = name;
+        this.pid = pid;
         this.authorUrl = authorUrl;
         this.isParent = isParent;
         this.authorMenu = authorMenu;
@@ -29,13 +29,37 @@ public class UserRoleVo {
         return "UserRoleVo{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
-                ", authorId=" + authorId +
-                ", authorName='" + authorName + '\'' +
-                ", authorPid=" + authorPid +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", pid=" + pid +
                 ", authorUrl='" + authorUrl + '\'' +
                 ", isParent=" + isParent +
                 ", authorMenu='" + authorMenu + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public int getRoleId() {
@@ -54,29 +78,7 @@ public class UserRoleVo {
         this.roleName = roleName;
     }
 
-    public int getAuthorId() {
-        return authorId;
-    }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
-    public int getAuthorPid() {
-        return authorPid;
-    }
-
-    public void setAuthorPid(int authorPid) {
-        this.authorPid = authorPid;
-    }
 
     public String getAuthorUrl() {
         return authorUrl;

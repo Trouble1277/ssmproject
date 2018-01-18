@@ -17,19 +17,20 @@ $(function () {
 
                 $.each(data,function (authorId,x) {
                     if (x.isParent){
-                        html+="<div class='panel panel-default'>";
-                        html+= "<div class='panel-heading' role='tab' id='heading"+x.authorId+"'>";
-                        html+= "<h4 class='panel-title'>" ;
-                        html+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+x.authorId+"' aria-expanded='true' aria-controls='collapse"+x.authorId+"'>";
-                        html+=x.authorName+"</a></h4></div>";
 
-                        html+= "<div id='collapse"+x.authorId+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+x.authorId+"'>";
+                        html+="<div class='panel panel-default'>";
+                        html+= "<div class='panel-heading' role='tab' id='heading"+x.id+"'>";
+                        html+= "<h4 class='panel-title'>" ;
+                        html+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+x.id+"' aria-expanded='true' aria-controls='collapse"+x.id+"'>";
+                        html+=x.name+"</a></h4></div>";
+
+                        html+= "<div id='collapse"+x.id+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+x.id+"'>";
                         html+="<div class='panel-body'>";
                         html+="<nav class='nav nav-pills nav-stacked'>";
                         html+="<li>";
                         $.each(data,function (authorPid,y) {
-                            if (x.authorId==y.authorPid){
-                                html+="<a role=\"button\" class=\"AccordionPanel\">"+y.authorName+"</a>";//将其变为一个按钮
+                            if (x.id==y.pid){
+                                html+="<a role=\"button\" class=\"AccordionPanel\">"+y.name+"</a>";//将其变为一个按钮
                             }
                         });
                         html+="</li></nav></div></div></div>";
@@ -64,7 +65,7 @@ $(function () {
                         //获取与之相应的url
                         var UrlText="";
                         $.each(data,function (pageUrl,val) {
-                            if (val.authorName==TabText){
+                            if (val.name==TabText){
                                 UrlText=val.authorUrl;
                             }
 
@@ -87,7 +88,7 @@ $(function () {
                             //获取menu的author
                             $.each(data,function (MenuAuthor,menuVal) {
                                 // console.log(menuVal.authorMenu);
-                                if (TabText==menuVal.authorName){
+                                if (TabText==menuVal.name){
                                     $.session.set('authorMenu',JSON.stringify(menuVal.authorMenu));
 
                                 }

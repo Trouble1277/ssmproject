@@ -23,9 +23,9 @@
         </association>
 
         <association property="authorEntity" javaType="AuthorEntity">
-            <id property="authorId" column="authorId"></id>
-            <result property="authorName" column="authorName"></result>
-            <result property="authorPid" column="authorPid"></result>
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="pid" column="pid"></result>
             <result property="authorDescribe" column="authorDescribe"></result>
             <result property="authorUrl" column="authorUrl"></result>
             <result property="isParent" column="isParent"></result>
@@ -37,7 +37,19 @@
 
     </resultMap>
 
+    <!--查询角色所对应的权限-->
 
+    <!--<select id="queryRoleAuthor" parameterType="">-->
+        <!--select * from user a-->
+        <!--inner join userrole b-->
+        <!--on a.userId=b.userId-->
+        <!--inner join role c-->
+        <!--on b.roleId=c.roleId-->
+        <!--inner join roleauthor d-->
+        <!--on c.roleId=d.roleId-->
+        <!--inner join author e-->
+        <!--on d.id=e.id-->
+    <!--</select>-->
 
 
 

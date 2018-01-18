@@ -1,9 +1,9 @@
 package com.vo;
 
 public class UserAuthorVo {
-    private int authorId;//权限id
-    private String authorName;//权限名字
-    private int authorPid;//权限父id
+    private int id;//权限id
+    private String name;//权限名字
+    private int pid;//权限父id
     private String authorUrl;
     private boolean isParent;
     private String authorMenu;//增删改操作
@@ -11,10 +11,10 @@ public class UserAuthorVo {
     public UserAuthorVo() {
     }
 
-    public UserAuthorVo(int authorId, String authorName, int authorPid, String authorUrl, boolean isParent, String authorMenu) {
-        this.authorId = authorId;
-        this.authorName = authorName;
-        this.authorPid = authorPid;
+    public UserAuthorVo(int id, String name, int pid, String authorUrl, boolean isParent, String authorMenu) {
+        this.id = id;
+        this.name = name;
+        this.pid = pid;
         this.authorUrl = authorUrl;
         this.isParent = isParent;
         this.authorMenu = authorMenu;
@@ -23,37 +23,37 @@ public class UserAuthorVo {
     @Override
     public String toString() {
         return "UserAuthorVo{" +
-                "authorId=" + authorId +
-                ", authorName='" + authorName + '\'' +
-                ", authorPid=" + authorPid +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pid=" + pid +
                 ", authorUrl='" + authorUrl + '\'' +
                 ", isParent=" + isParent +
                 ", authorMenu='" + authorMenu + '\'' +
                 '}';
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public int getId() {
+        return id;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getName() {
+        return name;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getAuthorPid() {
-        return authorPid;
+    public int getPid() {
+        return pid;
     }
 
-    public void setAuthorPid(int authorPid) {
-        this.authorPid = authorPid;
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public String getAuthorUrl() {
