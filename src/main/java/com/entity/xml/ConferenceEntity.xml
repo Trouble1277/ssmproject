@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ConferenceDao">
+
+
+
+    <!--  查询所有会议列表 -->
+    <select id="QueryConferenceAll" resultType="ConferenceEntity" parameterType="map" >
+        SELECT * FROM `conference`
+        <where>
+        <if test="cf.conference_emcee!=null"> 
+            AND conference_emcee  LIKE CONCAT(CONCAT('%',#{cf.conference_emcee}),'%')
+        </if>
+        </where>
+        <if test="limits.start !=null and limits.limit !=null">
+            limit #{limits.start},#{limits.limit}
+        </if>
+
+    </select>
+
+    <!--增加会议列表-->
+    <insert id="ConFerenceAdd" parameterType="ConferenceEntity">
+        INSERT INTO `conference`(conference_main_topic,fund_Id,conference_time,conference_emcee,conference_recorder,conference_document)
+          VALUES (#{conference_main_topic},#{fund_Id},#{conference_time},#{conference_emcee},#{conference_recorder},#{conference_document});
+    </insert>
+
+    <!--修改会议列表-->
+   <update id="ConFerenceUpdate" parameterType="ConferenceEntity">
+       UPDATE `conference` SET conference_main_topic=#{conference_main_topic},fund_Id=#{fund_Id},conference_time=#{conference_time},
+                                conference_emcee=#{conference_emcee},conference_recorder=#{conference_recorder},conference_document=#{conference_document}
+                                WHERE conference_id=#{conference_id}
+   </update>
+
+    <!--删除会议列表-->
+   <delete id="ConFerenceDel" parameterType="Integer">
+       DELETE FROM `conference` where conference_id=#{conference_id}
+   </delete>
+    
+
+
+</mapper>
