@@ -111,6 +111,18 @@ public class UserServiceImpl implements UserService {
         return userDao.delAuthor(id);
     }
 
+    public AuthorEntity queryAuthorById(int id) {
+        return userDao.queryAuthorById(id);
+    }
+
+    public List<RoleEntity> queryRoleAllManage(Map<String, Object> map) {
+        return userDao.queryRoleAllManage(map);
+    }
+
+    public List<RoleEntity> queryRoleAllManageCount(Map<String, Object> map) {
+        return userDao.queryRoleAllManageCount(map);
+    }
+
     public int updateAuthor(AuthorEntity authorEntity) {
         return userDao.updateAuthor(authorEntity);
     }
