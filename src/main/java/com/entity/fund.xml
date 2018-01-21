@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.FundDao">
+    <resultMap id="FundMap" type="com.entity.FundEntity">
+        <result property="fund_Id" column="fund_Id"></result>
+        <result property="fund_name" column="fund_name"></result>
+        <result property="fund_type" column="fund_type"></result>
+        <result property="organization_form" column="organization_form"></result>
+        <result property="capital_source" column="capital_source"></result>
+        <result property="fund_status" column="fund_status"></result>
+        <result property="fund_net" column="fund_net"></result>
+        <result property="raise_start_time" column="raise_start_time"></result>
+        <result property="raise_accomplish_time" column="raise_accomplish_time"></result>
+        <result property="fund_duration_deadline" column="fund_duration_deadline"></result>
+        <result property="start_invest_year" column="start_invest_year"></result>
+
+    </resultMap>
+    <select id="selectFundAll" resultMap="FundMap" parameterType="java.util.Map">
+        SELECT fund_Id,fund_name,fund_type,organization_form,capital_source,fund_status,fund_net,raise_start_time,raise_accomplish_time,fund_duration_deadline,ribution_scale,invest_currency,start_invest_year FROM fund
+        WHERE 1=1 AND fund_name LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectFundAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM fund
+    </select>
+
+    <insert id="addOneFund" parameterType="com.entity.FundEntity">
+           INSERT INTO fund(fund_name,fund_type,organization_form,capital_source,fund_status,fund_net,raise_start_time,raise_accomplish_time,fund_duration_deadline,ribution_scale,invest_currency,start_invest_year)
+           VALUES (#{fund_name},#{fund_type},#{organization_form},#{capital_source},#{fund_status},#{fund_net},#{raise_start_time},#{raise_accomplish_time},#{fund_duration_deadline},#{ribution_scale},#{invest_currency},#{start_invest_year})
+    </insert>
+    <delete id="delFund" parameterType="Integer">
+         DELETE FROM fund WHERE fund_Id=#{fund_Id}
+    </delete>
+
+    <update id="updateFund" parameterType="com.entity.FundEntity">
+        UPDATE fund set fund_name=#{fund_name},fund_type=#{fund_type},organization_form=#{organization_form},capital_source=#{capital_source},fund_status=#{fund_status},fund_net=#{fund_net},raise_start_time=#{raise_start_time},raise_accomplish_time=#{raise_accomplish_time},fund_duration_deadline=#{fund_duration_deadline},ribution_scale=#{ribution_scale},invest_currency=#{invest_currency},start_invest_year=#{start_invest_year}
+         WHERE fund_Id=#{fund_Id}
+    </update>
+
+</mapper>
