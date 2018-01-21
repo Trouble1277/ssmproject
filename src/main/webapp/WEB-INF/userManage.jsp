@@ -24,7 +24,7 @@
     <script src="/statics/ztree/js/jquery.ztree.excheck.js"></script>
 
     <script src="../statics/js/jquerysession.js"></script>
-    <script src="../statics/js/meseger.js"></script>
+    <script src="../statics/js/tooltip.js"></script>
     <script src="/statics/definition/userManage.js"></script>
 </head>
 <style type="text/css">

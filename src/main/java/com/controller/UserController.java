@@ -8,6 +8,7 @@ import com.vo.UserAuthorVo;
 import com.vo.UserRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -200,7 +201,7 @@ public class UserController {
         map.put("rows",userRoleAuthorVoList);
         map.put("total",total);
 
-        System.out.println(map);
+
 
         response.getWriter().write(JSON.toJSONString(map));
     }
@@ -241,7 +242,7 @@ public class UserController {
             //增加一个用户
             int n=userService.addUser(userEntity);
             uid=userEntity.getUserId()+"";
-            System.out.println(userEntity.getUserId() + "-------------------------------");
+
             userEntityUA.setUserId(Integer.parseInt(uid));
             if (n>0){
                 //增加用户的所有角色
@@ -334,8 +335,7 @@ public class UserController {
                 int DelUserRoleN=userService.delUserRole(Integer.parseInt(uid));
                 if (role != "") {
                     String[] roles= role.split(",");
-                    System.out.println(role);
-                    System.out.println(roles.length);
+
                     for (int i=0;i<roles.length;i++){//增加用户的所有角色
                         UserRoleEntity userRoleEntity=new UserRoleEntity();
                         UserEntity userEntityAdd=new UserEntity();
@@ -363,12 +363,12 @@ public class UserController {
                             authorEntityUA=new AuthorEntity();
                             authorId= (Integer) AuthorMap.get(key);
                             authorEntityUA.setId(authorId);
-                            System.out.println(authorId);
+
                         }else if (key=="AuthorMenu"){
                             authorMenu= (String) AuthorMap.get(key);
                             userAuthorEntity.setAuthorMenu(authorMenu);
                             userAuthorEntity.setAuthorEntity(authorEntityUA);//设置权限
-                            System.out.println(authorMenu);
+
                         }
                     }
                     int UAAddN=userService.addUserAuthor(userAuthorEntity);
@@ -398,7 +398,7 @@ public class UserController {
 
     }
 
-    //查询权限
+    //查询ztrre权限
     @RequestMapping("queryAuthorAll")
     public void QueryAuthorAll(HttpServletResponse response,String id) throws IOException{
         response.setCharacterEncoding("utf-8");
@@ -413,17 +413,34 @@ public class UserController {
         response.getWriter().write(JSON.toJSONString(authorEntities));
     }
 
+    //根据id查权限名称
+    @RequestMapping("queryAuthorById")
+    public void queryAuthorById(HttpServletResponse response,String id) throws IOException{
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html");
+
+
+            AuthorEntity authorEntity=userService.queryAuthorById(Integer.parseInt(id));
+
+        response.getWriter().write(JSON.toJSONString(authorEntity));
+    }
+
 
     //查询权限
     @RequestMapping("queryAuthorAllManage")
-    public void QueryAuthorAll2(HttpServletResponse response,HttpServletRequest request) throws IOException{
+    public void queryAuthorAllManage(HttpServletResponse response,HttpServletRequest request) throws IOException{
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html");
         String offset= request.getParameter("index");
         String limit= request.getParameter("size");
+        String id=request.getParameter("id");
+
 
         Map<String,Object> parm=new HashMap<String,Object>();
         Map<String,Object> map=new HashMap<String,Object>();
+        if (!StringUtils.isEmpty(id)){
+            parm.put("id",id);
+        }
         if (offset != null && limit != null) {
             parm.put("start", offset);
             parm.put("end", offset+limit);
@@ -443,13 +460,12 @@ public class UserController {
     public void AddAuthor(HttpServletRequest request,HttpServletResponse response,AuthorEntity authorEntity) throws IOException {
         request.setCharacterEncoding("utf-8");
 
-        System.out.println(authorEntity.getName() + authorEntity.getPid());
-//        int n=userService.addAuthor(authorEntity);
-//        if (n>0){
-//            response.getWriter().write("{\"success\":\"success\"}");
-//        }else{
-//            response.getWriter().write("{\"error\":\"error\"}");
-//        }
+        int n=userService.addAuthor(authorEntity);
+        if (n>0){
+            response.getWriter().write("{\"success\":\"success\"}");
+        }else{
+            response.getWriter().write("{\"error\":\"error\"}");
+        }
 
     }
 
@@ -476,6 +492,13 @@ public class UserController {
     public void UpdateAuthor(HttpServletRequest request,HttpServletResponse response,AuthorEntity authorEntity) throws IOException {
         request.setCharacterEncoding("utf-8");
 
+        if (authorEntity.getIsParent()==false){
+            authorEntity.setIsParent(1);
+        }
+
+        if (authorEntity.getIsParent()==true){
+            authorEntity.setIsParent(0);
+        }
         int n=userService.updateAuthor(authorEntity);
         if (n>0){
             response.getWriter().write("{\"success\":\"success\"}");
@@ -501,6 +524,34 @@ public class UserController {
 
         List<RoleEntity> roleEntities=userService.queryComboRoleAll();
         response.getWriter().write(JSON.toJSONString(roleEntities));
+    }
+
+    @RequestMapping("")
+    public void QueryRoleManage(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html");
+
+        String offset= request.getParameter("index");
+        String limit= request.getParameter("size");
+        String id=request.getParameter("id");
+
+
+        Map<String,Object> parm=new HashMap<String,Object>();
+        Map<String,Object> map=new HashMap<String,Object>();
+        if (!StringUtils.isEmpty(id)){
+            parm.put("id",id);
+        }
+        if (offset != null && limit != null) {
+            parm.put("start", offset);
+            parm.put("end", offset+limit);
+        }
+
+
+
+
+
+
     }
 
 

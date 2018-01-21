@@ -13,13 +13,14 @@
     <link href="/statics/bootstrap/css/bootstrap-table.css" rel="stylesheet">
     <link href="/statics/ztree/css/demo.css" rel="stylesheet">
     <link href="/statics/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link href="/statics/toastr/toastr.css" rel="stylesheet">
     <script src="/statics/bootstrap/js/jquery.min.js"></script>
     <script src="/statics/bootstrap/js/bootstrap.min.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table.js"></script>
     <script src="/statics/ztree/js/jquery.ztree.core.js"></script>
-    <script src="/statics/ztree/js/jquery.ztree.excheck.js"></script>
+    <script src="/statics/toastr/toastr.js"></script>
     <script src="../statics/js/jquerysession.js"></script>
-
+    <script src="../statics/js/tooltip.js"></script>
 
     <script src="/statics/definition/authorManage.js"></script>
 </head>
@@ -39,7 +40,11 @@
 
 <body>
     <div id="toolBar">
-        <button type="button" id="add" class="btn btn-default navbar-btn" style="display: none" data-toggle="modal" data-target="#myModal">
+
+        查询父分类下: <select id="likeAuthor" class="btn btn-default "  name="author"></select>
+
+
+        <button type="button" id="add" class="btn btn-default navbar-btn" style="display: none;margin-left: 15px;" data-toggle="modal" data-target="#myModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             增加
         </button>
@@ -49,7 +54,7 @@
             删除
         </button>
 
-        <button type="button" id="update" class="btn btn-default navbar-btn" style="display: none" data-toggle="modal" data-target="#myModal">
+        <button type="button" id="update" class="btn btn-default navbar-btn" style="display: none" data-toggle="modal" ><!--data-target="#myModal"-->
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             修改
         </button>
@@ -57,7 +62,7 @@
 
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
@@ -100,7 +105,7 @@
                         <label for="select" class="col-sm-4 control-label">是否父节点</label>
                         <div class="col-sm-8">
                             <select id="select" name="isParent">
-                                <option value="">请选择</option>
+                                <option value="xx">请选择</option>
                                 <option value="0">true</option>
                                 <option value="1">false</option>
                             </select>
@@ -109,15 +114,27 @@
 
 
                     <div class="form-group" style="margin-top: 2%">
-                     <label for="authorPid" class="col-sm-4 control-label">父级编号</label>
+                     <label for="authorPname" class="col-sm-4 control-label">父级编号</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="authorPid"  name="pid">
+                            <input type="text" class="form-control" id="authorPname"  name="pname">
                             <ul id='power' class='ztree' style='position:absolute;margin-top:0; width:320px;height: 150px;display: none;'></ul>
                         </div>
                     </div>
 
 
+                        <div class="form-group" style="margin-top: 2%;display: none;">
+                            <label for="authorPid" class="col-sm-4 control-label"></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="authorPid"  name="pid">
+                            </div>
+                        </div>
 
+                        <div class="form-group" style="margin-top: 2%;display: none;">
+                            <label for="authorId" class="col-sm-4 control-label"></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="authorId"  name="id">
+                            </div>
+                        </div>
 
 
                     </div>
@@ -125,17 +142,10 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-primary" id="SubmitAuthor">提交</button>
                     </div>
-
-
-
-
-
                 </form>
 
 
             </div><!--end modal-body-->
-
-
 
             </div><!-- end modal-content-->
         </div><!-- end modal-dialog-->

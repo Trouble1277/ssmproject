@@ -41,6 +41,9 @@ public interface UserService {
     //查询所有权限
     public List<AuthorEntity> queryAuthorAll(int authorPid);
 
+    //根据id查权限名称
+    public AuthorEntity queryAuthorById(int id);
+
     //查询所有角色
     public List<RoleEntity> queryComboRoleAll();
 
@@ -49,6 +52,12 @@ public interface UserService {
 
     //删除用户权限
     public int delUserAuthor(int userId);
+
+    //查询所有角色
+    public List<RoleEntity> queryRoleAllManage(Map<String,Object> map);
+
+    //查询所有角色的总数
+    public List<RoleEntity> queryRoleAllManageCount(Map<String,Object> map);
 
     //修改角色信息
     public int updateRole(RoleEntity roleEntity);
