@@ -5,16 +5,24 @@ $(function () {
     var mm=MenuV.split(",") ;
     if (mm[0]==1||mm[1]==1||mm[2]==1){
         $("#add").show();
+        $("#add").on('click',function () {
+            AddClick();
+        })
 
     }
     if (mm[0]==2||mm[1]==2||mm[2]==2){
         $("#del").show();
+        $("#del").on('click',function () {
+            DelClick();
+        })
     }
     if (mm[0]==3||mm[1]==3||mm[2]==3){
     }
     $("#cancel").show();
     $("#save").show();
-
+    $("#save").on('click',function () {
+        saveDate();
+    })
 
 
 
@@ -93,30 +101,27 @@ $(function () {
 var flag=1;
 var flag2=1;
 
-var Updaterow="";
-var  index="";
-var beforRoleName="";
+var Updaterow="";//修改的对象
+var  index="";//下标
+
 //当点击行的时候，获取row里的所有值
 function clickRow(row, $element,filed) {
     Updaterow=row;
     index= $element.data('index');//获取到下标
-    beforRoleName=Updaterow.roleName;
     if (flag2==1){
         var rows=$("#roleTable").bootstrapTable("updateRow",{
             index:index,
             row:{
                 roleName:"<input type='text' class=\"form-control\"  value=\""+Updaterow.roleName+"\" id='roleName' style='width: 120px'>",
-
                 name:"<input type='text' class=\"form-control\" id='updateAuthorValue' value=\""+Updaterow.name+"\">"
                 +"<ul id='power' class='ztree' style='position:absolute;margin-top:0; width:320px;height: 200px;'></ul>",
-                roleDescribe:"<input type='text' class=\"form-control\" value=\""+Updaterow.roleDescribe+"\" id='password' style='width: 80px'>",
-                createTime:"<input type='text' class=\"form-control\" value=\""+Updaterow.createTime+"\" id='userName' style='width: 80px'>",
+                roleDescribe:"<input type='text' class=\"form-control\" value=\""+Updaterow.roleDescribe+"\" id='roleDescribe' style='width: 120px'>",
+                // createTime:"<input type='text' class=\"form-control\" value=\""+Updaterow.createTime+"\" id='userName' style='width: 120px'>",
 
             }
         });
 
-        //加载ztree
-        loadZtree();
+        loadZtree(); //加载ztree
         flag2=2;
         flag=2;
     }else if(flag==2){
@@ -137,13 +142,27 @@ function AddClick() {
         var rowTable=$('#roleTable').bootstrapTable('getData',true);
         AddIndex=rowTable.length+1;//增加的行号
         add(AddIndex);
-
         flag=2;
         flag2=2;
+    }else if(flag==2){
+
+        Ewin.confirm({ message: "请完成当前的操作" }).on(function (e) {});
+    }
+}
+
+
+function DelClick() {
+    if (flag2==1){
+        // var rowTable=$('#roleTable').bootstrapTable('getData',true);
+        // AddIndex=rowTable.length+1;//增加的行号
+        // // add(AddIndex);
+        // flag=2;
+        // flag2=2;
     }else if(flag==2){
         Ewin.confirm({ message: "请完成当前的操作" }).on(function (e) {});
     }
 }
+
 
 //增加一行
 function add(index) {
@@ -154,8 +173,8 @@ function add(index) {
             roleName:"<input type='text' class=\"form-control\"  value=' ' id='roleName' style='width: 120px'>",
             name:"<input type='text' class=\"form-control\" id='updateAuthorValue' value=' '>"
             +"<ul id='power' class='ztree' style='position:absolute;margin-top:0; width:320px;height: 200px;'></ul>",
-            roleDescribe: '<input type="text"  class="form-control"  id="loginName" style="width:100px" >',
-            createTime:"<input type='text' class=\"form-control\" value=' ' id='password' style='width: 80px'>",
+            roleDescribe: '<input type="text"  class="form-control"  id="roleDescribe" style="width:100px" >',
+            createTime:"<input type='text' class=\"form-control\" value=' ' id='createTime' style='width: 80px'>",
 
         }
     });
@@ -166,7 +185,7 @@ function add(index) {
 
 
 
-//修改的保存
+//数据的保存
 function saveDate() {
     console.log(Updaterow);
 
@@ -175,12 +194,17 @@ function saveDate() {
         var rowTable=$('#roleTable').bootstrapTable('getData',true);
         var map="{";
         $.each(rowTable[index],function (k,v) {
+            if (k=='roleId'){
+                map+='"'+k+'":"'+Updaterow.roleId+'",';
+            }else{
                 map+='"'+k+'":"'+$('#'+k+'').val()+'",'
+            }
         });
         map=map.substring(0,map.length-1)+"}";
+        console.log(map)
         $.ajax({
             url:"/updateRole.xhtml",
-            data:{user:map,atuhorArray:JSON.stringify(getAuthor())},
+            data:{role:map,atuhorArray:JSON.stringify(getAuthor())},
             method:"post",
             success:function(data){
                 var resultData= JSON.parse(data);
@@ -209,7 +233,7 @@ function saveDate() {
 
         $.ajax({
             url:"/addRole.xhtml",
-            data:{user:AddMap,atuhorArray:JSON.stringify(getAuthor())},
+            data:{role:AddMap,atuhorArray:JSON.stringify(getAuthor())},
             method:"post",
             success:function (data) {
                 var resultData= JSON.parse(data);
