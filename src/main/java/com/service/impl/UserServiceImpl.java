@@ -119,7 +119,11 @@ public class UserServiceImpl implements UserService {
         return userDao.queryRoleAllManage(map);
     }
 
-    public List<RoleEntity> queryRoleAllManageCount(Map<String, Object> map) {
+    public List<UserAuthorVo> queryRoleAuthor(int roleId) {
+        return userDao.queryRoleAuthor(roleId);
+    }
+
+    public int queryRoleAllManageCount(Map<String, Object> map) {
         return userDao.queryRoleAllManageCount(map);
     }
 
