@@ -8,9 +8,8 @@
                           http://www.springframework.org/schema/context
                           http://www.springframework.org/schema/context/spring-context.xsd
                           http://www.springframework.org/schema/mvc
-                          http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-
+                          http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                         ">
 
     <context:component-scan base-package="com.controller"></context:component-scan>
 
@@ -19,6 +18,36 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
-<mvc:annotation-driven></mvc:annotation-driven>
+    <!-- 支持防止406错 -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" >
+    </mvc:annotation-driven>
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false" />
+        <property name="favorParameter" value="false" />
+        <property name="ignoreAcceptHeader" value="false" />
+        <property name="mediaTypes" >
+            <value>
+                atom=application/atom+xml
+                html=text/html
+                json=application/json
+                *=*/*
+            </value>
+        </property>
+    </bean>
+
+    <!--&lt;!&ndash; 加了@ResponseBody的方法自动返回JSON &ndash;&gt;-->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <value>text/html;charset=UTF-8</value>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
 
 </beans>
