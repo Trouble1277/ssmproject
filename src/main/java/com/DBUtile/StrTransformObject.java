@@ -21,6 +21,8 @@ public class StrTransformObject{
                     method.invoke(object, fieldVal);
                 } else if (field.getType().getSimpleName().equals("int")) {
                     method.invoke(object, Integer.parseInt(fieldVal));
+                }else if (field.getType().getSimpleName().equals("Integer")) {
+                    method.invoke(object, Integer.parseInt(fieldVal));
                 }
             }
         }
