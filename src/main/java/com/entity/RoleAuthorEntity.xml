@@ -39,17 +39,14 @@
 
     <!--查询角色所对应的权限-->
 
-    <!--<select id="queryRoleAuthor" parameterType="">-->
-        <!--select * from user a-->
-        <!--inner join userrole b-->
-        <!--on a.userId=b.userId-->
-        <!--inner join role c-->
-        <!--on b.roleId=c.roleId-->
-        <!--inner join roleauthor d-->
-        <!--on c.roleId=d.roleId-->
-        <!--inner join author e-->
-        <!--on d.id=e.id-->
-    <!--</select>-->
+    <select id="queryRoleAuthor" parameterType="int" resultType="UserAuthorVo" >
+           select c.id,c.`name`,c.pid,b.authorMenu from role a
+            inner join roleauthor b
+            on a.roleId=b.roleId
+            inner join author c
+            on b.id=c.id
+            where a.roleId=#{roleId}
+    </select>
 
 
 

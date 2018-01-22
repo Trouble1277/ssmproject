@@ -57,7 +57,7 @@ public interface UserService {
     public List<RoleEntity> queryRoleAllManage(Map<String,Object> map);
 
     //查询所有角色的总数
-    public List<RoleEntity> queryRoleAllManageCount(Map<String,Object> map);
+    public int queryRoleAllManageCount(Map<String,Object> map);
 
     //修改角色信息
     public int updateRole(RoleEntity roleEntity);
@@ -90,5 +90,9 @@ public interface UserService {
 
     //修改权限
     public int updateAuthor(AuthorEntity authorEntity);
+
+    //查询角色对应的权限
+    public List<UserAuthorVo> queryRoleAuthor(int roleId);
+
 
 }
