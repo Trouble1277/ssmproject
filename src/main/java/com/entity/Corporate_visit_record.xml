@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Corporate_visit_recordDao">
+    <resultMap id="Corporate_visit_recordMap" type="com.entity.Corporate_visit_recordEntity">
+        <result property="cvr_cor_visit_id" column="cvr_cor_visit_id"></result>
+        <result property="visit_record_id" column="visit_record_id"></result>
+        <result property="enterprise_id" column="enterprise_id"></result>
+    </resultMap>
+    <select id="selectCorporate_visit_recordAll" resultMap="Corporate_visit_recordMap" parameterType="java.util.Map">
+        SELECT cvr_cor_visit_id,visit_record_id,enterprise_id FROM Corporate_visit_record
+        WHERE 1=1 AND cvr_cor_visit_id LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectCorporate_visit_recordAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Corporate_visit_record
+    </select>
+
+    <insert id="addOneCorporate_visit_record" parameterType="com.entity.Corporate_visit_recordEntity">
+           INSERT INTO Corporate_visit_record(visit_record_id,enterprise_id)
+           VALUES (#{visit_record_id},#{enterprise_id})
+    </insert>
+    <delete id="delCorporate_visit_record" parameterType="Integer">
+         DELETE FROM Corporate_visit_record WHERE cvr_cor_visit_id=#{cvr_cor_visit_id}
+    </delete>
+
+    <update id="updateCorporate_visit_record" parameterType="com.entity.Corporate_visit_recordEntity">
+        UPDATE Corporate_visit_record set visit_record_id=#{visit_record_id},enterprise_id=#{enterprise_id}
+         WHERE cvr_cor_visit_id=#{cvr_cor_visit_id}
+    </update>
+
+</mapper>
