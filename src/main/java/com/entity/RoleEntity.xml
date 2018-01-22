@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+
+    <resultMap id="RoleMap" type="RoleEntity">
+        <id property="roleId" column="roleId"></id>
+        <result property="roleName" column="roleName"></result>
+        <result property="rolePid" column="rolePid"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="roleDescribe" column="roleDescribe"></result>
+        <result property="Extend1" column="Extend1"></result>
+        <result property="Extend2" column="Extend2"></result>
+
+
+        <collection property="authorEntityList" ofType="AuthorEntity">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="pid" column="pid"></result>
+            <result property="authorDescribe" column="authorDescribe"></result>
+            <result property="authorUrl" column="authorUrl"></result>
+            <result property="isParent" column="isParent"></result>
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </collection>
+
+        <collection property="userEntityList" ofType="UserEntity">
+            <id property="userId" column="userId"></id>
+            <result property="loginName" column="loginName"></result>
+            <result property="password" column="password"></result>
+            <result property="userName" column="userName"></result>
+            <result property="phoneNumber" column="phoneNumber"></result>
+            <result property="email" column="email"></result>
+            <result property="createTime" column="createTime"></result>
+            <result property="loginTime" column="loginTime"></result>
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </collection>
+
+
+    </resultMap>
+
+
+    <!--查询所有角色 -->
+    <select id="queryComboRoleAll" resultType="RoleEntity" >
+        select * from role
+    </select>
+
+
+    <!--查询所有角色-->
+    <select id="queryRoleAllManage" resultType="RoleEntity"  parameterType="Map">
+        select roleId,roleName,rolePid,createTime,roleDescribe from role WHERE 1=1
+        <if test="roleName!=null">
+            AND roleName=${roleName}
+        </if>
+
+        LIMIT ${start},${end}
+
+    </select>
+
+
+    <!--查询角色总数-->
+    <select id="queryRoleAllManageCount" resultType="int"  parameterType="Map">
+        select count(*) from role
+        <if test="roleName!=null">
+            AND roleName=${roleName}
+        </if>
+
+    </select>
+
+    <!--修改角色信息-->
+    <update id="updateRole" parameterType="RoleEntity"  >
+        UPDATE role SET roleName=#{roleName},rolePid=#{rolePid},roleDescribe=#{roleDescribe} WHERE roleId=#{roleId}
+    </update>
+
+    <!--增加角色-->
+    <insert id="addRole" parameterType="RoleEntity">
+        INSERT INTO role (roleName,rolePid,createTime,roleDescribe) VALUES (#{roleName},#{rolePid},#{createTime},#{roleDescribe})
+    </insert>
+
+
+    <!--删除角色-->
+    <delete id="delRole" parameterType="int">
+        DELETE FROM role where roleId = #{roleId}
+    </delete>
+
+
+
+
+
+
+
+
+</mapper>

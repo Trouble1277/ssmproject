@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+
+    <resultMap id="AuthorMap" type="AuthorEntity">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="pid" column="pid"></result>
+        <result property="authorDescribe" column="authorDescribe"></result>
+        <result property="authorUrl" column="authorUrl"></result>
+        <result property="isParent" column="isParent"></result>
+
+        <result property="Extend1" column="Extend1"></result>
+        <result property="Extend2" column="Extend2"></result>
+
+        <collection property="roleEntityList" ofType="RoleEntity">
+            <id property="roleId" column="roleId"></id>
+            <result property="roleName" column="roleName"></result>
+            <result property="rolePid" column="rolePid"></result>
+            <result property="createTime" column="createTime"></result>
+            <result property="roleDescribe" column="roleDescribe"></result>
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </collection>
+
+        <collection property="userEntityList" ofType="UserEntity">
+            <id property="userId" column="userId"></id>
+            <result property="loginName" column="loginName"></result>
+            <result property="password" column="password"></result>
+            <result property="userName" column="userName"></result>
+            <result property="phoneNumber" column="phoneNumber"></result>
+            <result property="email" column="email"></result>
+            <result property="createTime" column="createTime"></result>
+            <result property="loginTime" column="loginTime"></result>
+            <result property="Extend1" column="Extend1"></result>
+            <result property="Extend2" column="Extend2"></result>
+        </collection>
+
+
+    </resultMap>
+
+
+    <!--查询ztrre权限 -->
+    <select id="queryAuthorAll" resultType="AuthorEntity" parameterType="int">
+        select id,name,pid,isParent from author  where pid = #{authorPid}
+    </select>
+
+
+    <!--根据id查权限名称 -->
+    <select id="queryAuthorById" resultType="AuthorEntity" parameterType="int">
+        select id,name,pid,isParent from author  where id = #{id}
+    </select>
+
+
+    <!--权限管理查询 -->
+    <select id="queryAuthorAllManage" resultType="AuthorEntity"  parameterType="Map">
+        select id,name,pid,authorDescribe,authorUrl,isParent from author WHERE 1=1
+        <if test="id!=null">
+            AND pid=${id}
+        </if>
+
+        LIMIT ${start},${end}
+
+    </select>
+
+    <!--查询总数-->
+    <select id="queryAuthorAllManageCount" resultType="int" parameterType="Map">
+        select count(*) from author
+        <if test="id!=null">
+           WHERE  pid=${id}
+        </if>
+    </select>
+
+
+
+
+    <!--增加用户-->
+    <insert id="addAuthor" parameterType="AuthorEntity" >
+        INSERT INTO author(name,pid,authorDescribe,authorUrl,isParent) VALUES 
+        <if test="isParent==true">
+            (#{name},#{pid},#{authorDescribe},#{authorUrl},0)
+        </if>
+        <if test="isParent==false">
+            (#{name},#{pid},#{authorDescribe},#{authorUrl},1)
+        </if>
+
+    </insert>
+
+
+    <!--删除用户-->
+    <delete id="delAuthor" parameterType="int">
+        DELETE FROM author where id = #{id}
+    </delete>
+
+
+    <!--修改权限信息-->
+    <update id="updateAuthor" parameterType="AuthorEntity"  >
+        UPDATE author SET name=#{name},pid=#{pid},authorDescribe=#{authorDescribe},authorUrl=#{authorUrl},
+        <if test="isParent==true">
+            isParent=0
+        </if>
+        <if test="isParent==false">
+            isParent=1
+        </if>
+         WHERE id=#{id}
+    </update>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
