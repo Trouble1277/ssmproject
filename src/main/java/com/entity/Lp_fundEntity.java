@@ -1,21 +1,21 @@
 package com.entity;
 
 public class Lp_fundEntity{
-	private Integer LP_fund_ribution_Id;
-	private String LP_type;
-	private Integer LP_Id;
+	private Integer lp_fund_ribution_Id;
+	private String lp_type;
+	private Integer lp_Id;
 	private String commitment_sum;
 	private String reality_contributive;
 	private Integer fund_Id;
 	private String remark;
-	public Integer getLP_fund_ribution_Id(){
-		return LP_fund_ribution_Id;
+	public Integer getLp_fund_ribution_Id(){
+		return lp_fund_ribution_Id;
 	}
-	public String getLP_type(){
-		return LP_type;
+	public String getLp_type(){
+		return lp_type;
 	}
-	public Integer getLP_Id(){
-		return LP_Id;
+	public Integer getLp_Id(){
+		return lp_Id;
 	}
 	public String getCommitment_sum(){
 		return commitment_sum;
@@ -29,14 +29,14 @@ public class Lp_fundEntity{
 	public String getRemark(){
 		return remark;
 	}
-	public void setLP_fund_ribution_Id(Integer LP_fund_ribution_Id){
-		this.LP_fund_ribution_Id=LP_fund_ribution_Id;
+	public void setLp_fund_ribution_Id(Integer lp_fund_ribution_Id){
+		this.lp_fund_ribution_Id=lp_fund_ribution_Id;
 	}
-	public void setLP_type(String LP_type){
-		this.LP_type=LP_type;
+	public void setLp_type(String lp_type){
+		this.lp_type=lp_type;
 	}
-	public void setLP_Id(Integer LP_Id){
-		this.LP_Id=LP_Id;
+	public void setLp_Id(Integer lp_Id){
+		this.lp_Id=lp_Id;
 	}
 	public void setCommitment_sum(String commitment_sum){
 		this.commitment_sum=commitment_sum;
