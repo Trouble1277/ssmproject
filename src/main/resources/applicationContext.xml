@@ -39,7 +39,12 @@
         <property name="basePackage" value="com.dao"></property>
     </bean>
 
+    <!--配置activiti事务-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
 
-
+    <!--引用activiti.xml-->
+    <import resource="classpath:activiti.cfg.xml"></import>
 
 </beans>
