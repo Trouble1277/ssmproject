@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Corporate_financial_documentDao">
+    <resultMap id="Corporate_financial_documentMap" type="com.entity.Corporate_financial_documentEntity">
+        <result property="cfd_financial_document_id" column="cfd_financial_document_id"></result>
+        <result property="cfd_financial_document" column="cfd_financial_document"></result>
+        <result property="cfd_financial_report_period" column="cfd_financial_report_period"></result>
+        <result property="enterprise_id" column="enterprise_id"></result>
+    </resultMap>
+    <select id="selectCorporate_financial_documentAll" resultMap="Corporate_financial_documentMap" parameterType="java.util.Map">
+        SELECT cfd_financial_document_id,cfd_financial_document,cfd_financial_report_period,enterprise_id FROM Corporate_financial_document
+        WHERE 1=1 AND cfd_financial_document LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectCorporate_financial_documentAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Corporate_financial_document
+    </select>
+
+    <insert id="addOneCorporate_financial_document" parameterType="com.entity.Corporate_financial_documentEntity">
+           INSERT INTO Corporate_financial_document(cfd_financial_document,cfd_financial_report_period,enterprise_id)
+           VALUES (#{cfd_financial_document},#{cfd_financial_report_period},${enterprise_id})
+    </insert>
+    <delete id="delCorporate_financial_document" parameterType="Integer">
+         DELETE FROM Corporate_financial_document WHERE cfd_financial_document_id=#{cfd_financial_document_id}
+    </delete>
+
+    <update id="updateCorporate_financial_document" parameterType="com.entity.Corporate_financial_documentEntity">
+        UPDATE Corporate_financial_document set cfd_financial_document=#{cfd_financial_document},cfd_financial_report_period=#{cfd_financial_report_period},enterprise_id=${enterprise_id}
+         WHERE cfd_financial_document_id=#{cfd_financial_document_id}
+    </update>
+
+</mapper>

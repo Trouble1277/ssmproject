@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Corporate_equity_structure_designDao">
+    <resultMap id="Corporate_equity_structure_designMap" type="com.entity.Corporate_equity_structure_designEntity">
+        <result property="cesd_cor_equity_id" column="cesd_cor_equity_id"></result>
+        <result property="enterprise_id" column="enterprise_id"></result>
+        <result property="cesd_report_period" column="cesd_report_period"></result>
+        <result property="cesd_shareholder_name" column="cesd_shareholder_name"></result>
+        <result property="cesd_shareholdering_ratio" column="cesd_shareholdering_ratio"></result>
+   </resultMap>
+    <select id="selectCorporate_equity_structure_designAll" resultMap="Corporate_equity_structure_designMap" parameterType="java.util.Map">
+        SELECT `cesd_cor_equity_id`, `enterprise_id`, `cesd_report_period`, `cesd_shareholder_name`, `cesd_shareholdering_ratio`FROM Corporate_equity_structure_design
+        WHERE 1=1 AND cesd_cor_equity_id LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectCorporate_equity_structure_designAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Corporate_equity_structure_design
+    </select>
+
+    <insert id="addOneCorporate_equity_structure_design" parameterType="com.entity.Corporate_equity_structure_designEntity">
+        INSERT INTO Corporate_equity_structure_design(`enterprise_id`, `cesd_report_period`, `cesd_shareholder_name`, `cesd_shareholdering_ratio`)
+        VALUES (#{enterprise_id},#{cesd_report_period},#{cesd_shareholder_name},#{cesd_shareholdering_ratio})
+    </insert>
+    <delete id="delCorporate_equity_structure_design" parameterType="Integer">
+        DELETE FROM Corporate_equity_structure_design WHERE cesd_cor_equity_id=#{cesd_cor_equity_id}
+    </delete>
+
+    <update id="updateCorporate_equity_structure_design" parameterType="com.entity.Corporate_equity_structure_designEntity">
+        UPDATE Corporate_equity_structure_design set enterprise_id=#{enterprise_id},cesd_report_period=#{cesd_report_period},cesd_shareholder_name=#{cesd_shareholder_name},cesd_shareholdering_ratio=#{cesd_shareholdering_ratio}
+        WHERE cesd_cor_equity_id=#{cesd_cor_equity_id}
+    </update>
+
+</mapper>

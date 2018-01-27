@@ -18,7 +18,7 @@
 
     <script src="/statics/bootstrap/js/bootstrap-table-zh-CN.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table-editable.js"></script>
-    <script src="/statics/definition/fund.js"></script>
+    <script src="/statics/definition/corporateFinancialDocument.js"></script>
 </head>
 <body>
 <div>
@@ -43,6 +43,6 @@
     <a id="example" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"></a>
 
 </div>
-<table id="fundTable"></table>
+<table id="corporateFinancialDocumentTable"></table>
 </body>
 </html>

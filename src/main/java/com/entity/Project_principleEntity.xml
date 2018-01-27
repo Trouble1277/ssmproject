@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Project_principleDao">
+    <resultMap id="Project_principleMap" type="com.entity.Project_principleEntity">
+        <result property="pp_id" column="pp_id"></result>
+        <result property="contacts_id" column="contacts_id"></result>
+        <result property="enterprise_id" column="enterprise_id"></result>
+
+    </resultMap>
+    <select id="selectProject_principleAll" resultMap="Project_principleMap" parameterType="java.util.Map">
+        SELECT `pp_id`, `contacts_id`, `enterprise_id` FROM Project_principle
+        WHERE 1=1 AND pp_id LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectProject_principleAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Project_principle
+    </select>
+
+    <insert id="addOneProject_principle" parameterType="com.entity.Project_principleEntity">
+           INSERT INTO Project_principle(`contacts_id`, `enterprise_id`)
+           VALUES (#{contacts_id},#{enterprise_id})
+    </insert>
+    <delete id="delProject_principle" parameterType="Integer">
+         DELETE FROM Project_principle WHERE pp_id=#{pp_id}
+    </delete>
+
+    <update id="updateProject_principle" parameterType="com.entity.Project_principleEntity">
+        UPDATE Project_principle set contacts_id=#{contacts_id},enterprise_id=#{enterprise_id}
+         WHERE pp_id=#{pp_id}
+    </update>
+
+</mapper>

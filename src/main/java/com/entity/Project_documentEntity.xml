@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Project_documentDao">
+    <resultMap id="Project_documentMap" type="com.entity.Project_documentEntity">
+        <result property="project_documents_id" column="project_documents_id"></result>
+        <result property="project_documents_name" column="project_documents_name"></result>
+        <result property="project_documents_class" column="project_documents_class"></result>
+        <result property="project_id" column="project_id"></result>
+        <result property="pd_upload_name" column="pd_upload_name"></result>
+        <result property="pd_upload_time" column="pd_upload_time"></result>
+    </resultMap>
+    <select id="selectProject_documentAll" resultMap="Project_documentMap" parameterType="java.util.Map">
+        SELECT project_documents_id,project_documents_name,project_documents_class,project_id,pd_upload_name,pd_upload_time FROM Project_document
+        WHERE 1=1 AND project_documents_name LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectProject_documentAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Project_document
+    </select>
+
+    <insert id="addOneProject_document" parameterType="com.entity.Project_documentEntity">
+           INSERT INTO Project_document(project_documents_name,project_documents_class,project_id,pd_upload_name,pd_upload_time )
+           VALUES (#{project_documents_name},#{project_documents_class},#{project_id},#{pd_upload_name},#{pd_upload_time})
+    </insert>
+    <delete id="delProject_document" parameterType="Integer">
+         DELETE FROM Project_document WHERE project_documents_id=#{project_documents_id}
+    </delete>
+
+    <update id="updateProject_document" parameterType="com.entity.Project_documentEntity">
+        UPDATE Project_document set project_documents_name=#{project_documents_name},project_documents_class=#{project_documents_class},project_id=#{project_id},pd_upload_name=#{pd_upload_name},pd_upload_time=#{pd_upload_time}
+         WHERE project_documents_id=#{project_documents_id}
+    </update>
+
+</mapper>

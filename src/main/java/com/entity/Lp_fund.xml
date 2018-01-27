@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Lp_fundDao">
+    <resultMap id="Lp_fundMap" type="com.entity.Lp_fundEntity">
+        <result property="lp_fund_ribution_Id" column="lp_fund_ribution_Id"></result>
+        <result property="lp_type" column="lp_type"></result>
+        <result property="lp_Id" column="lp_Id"></result>
+        <result property="commitment_sum" column="commitment_sum"></result>
+        <result property="reality_contributive" column="reality_contributive"></result>
+        <result property="fund_Id" column="fund_Id"></result>
+        <result property="remark" column="remark"></result>
+    </resultMap>
+    <select id="selectLp_fundAll" resultMap="Lp_fundMap" parameterType="java.util.Map">
+        SELECT lp_fund_ribution_Id,lp_type,lp_Id,commitment_sum,reality_contributive,fund_Id,remark FROM lp_fund
+        WHERE 1=1 AND lp_fund_ribution_Id LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectLp_fundAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM lp_fund
+    </select>
+
+    <insert id="addOneLp_fund" parameterType="com.entity.Lp_fundEntity">
+           INSERT INTO lp_fund(lp_type,lp_Id,commitment_sum,reality_contributive,fund_Id,remark )
+           VALUES (#{lp_type},#{lp_Id},#{commitment_sum},#{reality_contributive},#{fund_Id},#{remark})
+    </insert>
+    <delete id="delLp_fund" parameterType="Integer">
+         DELETE FROM lp_fund WHERE lp_fund_ribution_Id=#{lp_fund_ribution_Id}
+    </delete>
+
+    <update id="updateLp_fund" parameterType="com.entity.Lp_fundEntity">
+        UPDATE lp_fund set lp_type=#{lp_type},lp_Id=#{lp_Id},commitment_sum=#{commitment_sum},reality_contributive=#{reality_contributive},fund_Id=#{fund_Id},remark=#{remark}
+         WHERE lp_fund_ribution_Id=#{lp_fund_ribution_Id}
+    </update>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ProjectDao">
+    <resultMap id="ProjectMap" type="com.entity.ProjectEntity">
+        <result property="project_id" column="project_id"></result>
+        <result property="project_name" column="project_name"></result>
+        <result property="project_phases" column="project_phases"></result>
+        <result property="principal_id" column="principal_id"></result>
+        <result property="contacts_id" column="contacts_id"></result>
+        <result property="project_total_amount" column="project_total_amount"></result>
+        <result property="project_privately_fund" column="project_privately_fund"></result>
+        <result property="project_leverage_fund" column="project_leverage_fund"></result>
+        <result property="project_shareholding_ratio" column="project_shareholding_ratio"></result>
+        <result property="fund_Id" column="fund_Id"></result>
+        <result property="enterprise_id" column="enterprise_id"></result>
+        <result property="project_remark" column="project_remark"></result>
+
+    </resultMap>
+    <select id="selectProjectAll" resultMap="ProjectMap" parameterType="java.util.Map">
+        SELECT project_id,project_name,project_phases,principal_id,contacts_id,project_total_amount,project_privately_fund,project_leverage_fund,project_shareholding_ratio,fund_Id,enterprise_id,project_remark FROM Project
+        WHERE 1=1 AND project_name LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectProjectAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Project
+    </select>
+
+    <insert id="addOneProject" parameterType="com.entity.ProjectEntity">
+           INSERT INTO Project(project_name,project_phases,principal_id,contacts_id,project_total_amount,project_privately_fund,project_leverage_fund,project_shareholding_ratio,fund_Id,enterprise_id,project_remark)
+           VALUES (#{project_name},#{project_phases},#{principal_id},#{contacts_id},#{project_total_amount},#{project_privately_fund},#{project_leverage_fund},#{project_shareholding_ratio},#{fund_Id},#{enterprise_id},#{project_remark})
+    </insert>
+    <delete id="delProject" parameterType="Integer">
+         DELETE FROM Project WHERE project_id=#{project_id}
+    </delete>
+
+    <update id="updateProject" parameterType="com.entity.ProjectEntity">
+        UPDATE Project set project_name=#{project_name},project_phases=#{project_phases},principal_id=#{principal_id},contacts_id=#{contacts_id},project_total_amount=#{project_total_amount},project_privately_fund=#{project_privately_fund},project_leverage_fund=#{project_leverage_fund},project_shareholding_ratio=#{project_shareholding_ratio},fund_Id=#{fund_Id},enterprise_id=#{enterprise_id},project_remark=#{project_remark}
+         WHERE project_id=#{project_id}
+    </update>
+
+</mapper>

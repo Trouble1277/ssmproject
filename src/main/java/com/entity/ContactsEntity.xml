@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ContactsDao">
+    <resultMap id="ContactsMap" type="com.entity.ContactsEntity">
+        <result property="contacts_Id" column="contacts_Id"></result>
+        <result property="contacts_name" column="contacts_name"></result>
+        <result property="contacts_site" column="contacts_site"></result>
+        <result property="contacts_phone" column="contacts_phone"></result>
+        <result property="contacts_postcode" column="contacts_postcode"></result>
+        <result property="contacts_faxes" column="contacts_faxes"></result>
+        <result property="contacts_postbox" column="contacts_postbox"></result>
+    </resultMap>
+    <select id="selectContactsAll" resultMap="ContactsMap" parameterType="java.util.Map">
+        SELECT `contacts_Id`, `contacts_name`, `contacts_site`, `contacts_phone`, `contacts_postcode`, `contacts_faxes`, `contacts_postbox` FROM contacts
+        WHERE 1=1 AND contacts_name LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectContactsAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM contacts
+    </select>
+
+    <insert id="addOneContacts" parameterType="com.entity.ContactsEntity">
+        INSERT INTO contacts(`contacts_name`, `contacts_site`, `contacts_phone`, `contacts_postcode`, `contacts_faxes`, `contacts_postbox`)
+        VALUES (#{contacts_name},#{contacts_site},#{contacts_phone},#{contacts_postcode},#{contacts_faxes},#{contacts_postbox})
+    </insert>
+    <delete id="delContacts" parameterType="Integer">
+        DELETE FROM contacts WHERE contacts_Id=#{contacts_Id}
+    </delete>
+
+    <update id="updateContacts" parameterType="com.entity.ContactsEntity">
+        UPDATE contacts set contacts_name=#{contacts_name},contacts_site=#{contacts_site},contacts_phone=#{contacts_phone},contacts_postcode=#{contacts_postcode},contacts_faxes=#{contacts_faxes},contacts_postbox=#{contacts_postbox}
+        WHERE contacts_Id=#{contacts_Id}
+    </update>
+
+</mapper>

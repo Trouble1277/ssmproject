@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LegalDao">
+    <resultMap id="LegalMap" type="com.entity.LegalEntity">
+        <result property="legal_id" column="legal_id"></result>
+        <result property="lP_shortened" column="lP_shortened"></result>
+        <result property="english_shortened" column="english_shortened"></result>
+        <result property="lP_full" column="lP_full"></result>
+        <result property="english_full" column="english_full"></result>
+        <result property="capital_source" column="capital_source"></result>
+        <result property="lP_type" column="lP_type"></result>
+        <result property="establish_time" column="establish_time"></result>
+        <result property="administration_fund" column="administration_fund"></result>
+        <result property="whether_cast" column="whether_cast"></result>
+        <result property="contacts_Id" column="contacts_Id"></result>
+        <result property="url" column="url"></result>
+        <result property="headquarters_location" column="headquarters_location"></result>
+
+    </resultMap>
+    <select id="selectLegalAll" resultMap="LegalMap" parameterType="java.util.Map">
+        SELECT `legal_id`, `lP_shortened`, `english_shortened`, `lP_full`, `english_full`, `capital_source`, `lP_type`, `establish_time`, `administration_fund`, `whether_cast`, `contacts_Id`, `url`, `headquarters_location` FROM Legal
+        WHERE 1=1 AND lP_full LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectLegalAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Legal
+    </select>
+
+    <insert id="addOneLegal" parameterType="com.entity.LegalEntity">
+           INSERT INTO Legal(`lP_shortened`, `english_shortened`, `lP_full`, `english_full`, `capital_source`, `lP_type`, `establish_time`, `administration_fund`, `whether_cast`, `contacts_Id`, `url`, `headquarters_location`)
+           VALUES (#{lP_shortened},#{english_shortened},#{lP_full},#{english_full},#{capital_source},#{lP_type},#{establish_time},#{administration_fund},#{whether_cast},#{contacts_Id},#{url},#{headquarters_location})
+    </insert>
+    <delete id="delLegal" parameterType="Integer">
+         DELETE FROM Legal WHERE legal_id=#{legal_id}
+    </delete>
+
+    <update id="updateLegal" parameterType="com.entity.LegalEntity">
+        UPDATE Legal set lP_shortened=#{lP_shortened},english_shortened=#{english_shortened},lP_full=#{lP_full},english_full=#{english_full},capital_source=#{capital_source},lP_type=#{lP_type},establish_time=#{establish_time},administration_fund=#{administration_fund},whether_cast=#{whether_cast},contacts_Id=#{contacts_Id},url=#{url},headquarters_location=#{headquarters_location}
+         WHERE legal_id=#{legal_id}
+    </update>
+
+</mapper>
