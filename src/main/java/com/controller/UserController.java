@@ -2,8 +2,6 @@ package com.controller;
 import com.alibaba.fastjson.JSON;
 import com.entity.*;
 import com.service.UserService;
-import com.sun.org.apache.bcel.internal.generic.I2F;
-import com.vo.RoleAuthorVo;
 import com.vo.UserRoleAuthorVo;
 import com.vo.UserAuthorVo;
 import com.vo.UserRoleVo;
@@ -119,6 +117,7 @@ public class UserController {
     public void QueryUserAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html");
+//        String order= request.getParameter("order");
         String offset= request.getParameter("index");
         String limit= request.getParameter("size");
 
@@ -129,7 +128,9 @@ public class UserController {
             parm.put("start", offset);
             parm.put("end", offset+limit);
         }
-
+//        if (order != null && order != null) {
+//            parm.put("order", order);
+//        }
 
         List<UserEntity> userEntityList=userService.queryUserAll(parm);
         int total=userService.queryUserAllCount(parm);
@@ -524,10 +525,7 @@ public class UserController {
         response.getWriter().write(JSON.toJSONString(roleEntities));
     }
 
-
-
-
-    @RequestMapping("queryRoleAllManage")
+    @RequestMapping("")
     public void QueryRoleManage(HttpServletRequest request,HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
@@ -548,61 +546,8 @@ public class UserController {
             parm.put("end", offset+limit);
         }
 
-        List<RoleEntity> roleEntityList=userService.queryRoleAllManage(parm);//查询所有的角色
-        List<RoleAuthorVo> roleAuthorVoList =new ArrayList<RoleAuthorVo>();
-        for (RoleEntity roleEntity : roleEntityList) {
-            String authorName="";
-            RoleAuthorVo roleAuthorVo=new RoleAuthorVo();
-            roleAuthorVo.setRoleId(roleEntity.getRoleId());
-            roleAuthorVo.setRoleName(roleEntity.getRoleName());
-            roleAuthorVo.setRoleDescribe(roleEntity.getRoleDescribe());
-            roleAuthorVo.setCreateTime(roleEntity.getCreateTime());
-
-            List<UserAuthorVo> userAuthorVoList=userService.queryRoleAuthor(roleEntity.getRoleId());//根据角色id去查询所有的权限
-
-            for (UserAuthorVo userAuthorVo : userAuthorVoList) {
-                authorName+=userAuthorVo.getName()+",";
-            }
-            if (authorName.length()!=0){
-                authorName=authorName.substring(0,authorName.length()-1);
-            }
-            roleAuthorVo.setName(authorName);
-            roleAuthorVoList.add(roleAuthorVo);
-
-        }
-        int total=userService.queryAuthorAllManageCount(parm);
-        map.put("rows",roleAuthorVoList);
-        map.put("total",total);
-
-        response.getWriter().write(JSON.toJSONString(map));
 
 
-
-    }
-
-
-
-
-
-    @RequestMapping("addRole")
-    public void addRole(HttpServletRequest request,HttpServletResponse response){
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html");
-
-
-
-    }
-
-    @RequestMapping("updateRole")
-    public void updateRole(HttpServletRequest request,HttpServletResponse response){
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html");
-
-
-    }
-
-    @RequestMapping("delRole")
-    public void delRole(HttpServletRequest request,HttpServletResponse response){
 
 
 

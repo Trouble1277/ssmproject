@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Activity_modelDao">
+    <resultMap id="Activity_modelMap" type="com.entity.Activity_modelEntity">
+        <result property="activity_model_id" column="activity_model_id"></result>
+        <result property="activity_model_url" column="activity_model_url"></result>
+        <result property="activity_model_remark" column="activity_model_remark"></result>
+    </resultMap>
+    <select id="selectActivity_modelAll" resultMap="Activity_modelMap" parameterType="java.util.Map">
+        SELECT activity_model_id,activity_model_url,activity_model_remark FROM Activity_model
+        WHERE 1=1 AND activity_model_url LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectActivity_modelAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Activity_model
+    </select>
+
+    <insert id="addOneActivity_model" parameterType="com.entity.Activity_modelEntity">
+           INSERT INTO Activity_model(activity_model_url,activity_model_remark)
+           VALUES (${activity_model_url},'${activity_model_remark}','${bl_remark}')
+    </insert>
+    <delete id="delActivity_model" parameterType="Integer">
+         DELETE FROM Activity_model WHERE activity_model_id=#{activity_model_id}
+    </delete>
+
+    <update id="updateActivity_model" parameterType="com.entity.Activity_modelEntity">
+        UPDATE Activity_model set activity_model_url=#{activity_model_url},activity_model_remark=#{activity_model_remark}
+         WHERE activity_model_id=#{activity_model_id}
+    </update>
+
+</mapper>
