@@ -2,6 +2,7 @@ package com.service.impl;
 
 import com.dao.ConferenceDao;
 import com.entity.ConferenceEntity;
+import com.entity.FundEntity;
 import com.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,10 @@ public class ConferenceServiceImpl implements ConferenceService {
 
     public void ConFerenceDel(Integer conference_id) {
         conferenceDao.ConFerenceDel(conference_id);
+    }
+
+    public List<FundEntity> QueryConferenceFund() {
+        return conferenceDao.QueryConferenceFund();
     }
 
 

@@ -21,6 +21,19 @@ public class ConferenceEntity {
 
     private String conference_document;
 
+    @Override
+    public String toString() {
+        return "ConferenceEntity{" +
+            "conference_id=" + conference_id +
+            ", conference_main_topic='" + conference_main_topic + '\'' +
+            ", fund_Id=" + fund_Id +
+            ", conference_time=" + conference_time +
+            ", conference_emcee='" + conference_emcee + '\'' +
+            ", conference_recorder='" + conference_recorder + '\'' +
+            ", conference_document='" + conference_document + '\'' +
+            '}';
+    }
+
     public ConferenceEntity() {
     }
 
