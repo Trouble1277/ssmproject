@@ -37,7 +37,11 @@
    <delete id="ConFerenceDel" parameterType="Integer">
        DELETE FROM `conference` where conference_id=#{conference_id}
    </delete>
-    
+
+
+    <select id="QueryConferenceFund" resultType="FundEntity" >
+        SELECT * FROM fund
+    </select>
 
 
 </mapper>
