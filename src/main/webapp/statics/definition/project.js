@@ -98,7 +98,14 @@ function save() {
     $.each(rowTable[0],function (k,v) {
         if(k=='project_id'&&updataID!=null){
             map+='"'+k+'":"'+updataID+'",';
-        }else {
+        }else if(k=='project_phases'){
+            if(v!=null){
+                map+='"'+k+'":"'+10+'",';
+            }else {
+                map+='"'+k+'":"'+$('#'+k+'').val()+'",';
+            }
+        }
+        else {
             map+='"'+k+'":"'+$('#'+k+'').val()+'",';
         }
     });
@@ -198,12 +205,35 @@ function updata(row,index) {
 
 //增加一行
 function add(index) {
+    var dropDownBoxOne;
+    $.ajax({
+        url:'/selectDataDictionaryOneSon.xhtml',
+        methods:"post",
+        data:{'ddid':'4'},
+        async: false,
+        success:function (data) {
+           dropDownBoxOne=dropDownBox('project_phases',JSON.parse(data));
+        }
+    });
+
+    
     $('#projectTable').bootstrapTable('insertRow',{index:index, row:{
         project_id:'0',
-        project_name:'<input type="text" class="form-control"  id="project_name"  style="width:100px">',
-        project_phases:'<input type="text" class="form-control"  id="project_phases"  style="width:100px">',
-        principal_id:'<input type="text" id="principal_id"   class="form-control"   style="width:100px">',
-        contacts_id:'<input type="text"  class="form-control"  id="contacts_id" style="width:100px" >',
+        project_name:'<input type="text" class="form-control"  id="project_name" style="width:100px">',
+        project_phases:'<input type="text" class="form-control" id="project_phases" value="审批中"  style="width:100px" readonly="true" >',
+        principal_id:'<div class="btn-group"  style="width:150px"> '+
+        '<span type="text" class="form-control"  id="principal_id" style="width:100px"></span>'+
+        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:34px;margin-top:-34px;margin-left:98px">' +
+        '<span class="caret"></span>' +
+        '</button>' +
+        '<ul class="dropdown-menu" role="menu"><table id="principalTable2"></table></ul></div>',
+
+        contacts_id:'<div class="btn-group"  style="width:150px"> '+
+        '<span type="text" class="form-control"  id="contacts_id" style="width:100px"></span>'+
+        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:34px;margin-top:-34px;margin-left:98px">' +
+        '<span class="caret"></span>' +
+        '</button>' +
+        '<ul class="dropdown-menu" role="menu"><table id="contactsTable2"></table></ul></div>',
         project_total_amount:'<input type="text"  class="form-control"  id="project_total_amount" style="width:100px" >',
         project_privately_fund:'<input type="text" class="form-control"  id="project_privately_fund" style="width:100px" >',
         project_leverage_fund:'<input type="text" class="form-control"  id="project_leverage_fund" style="width:180px" >',
@@ -214,22 +244,33 @@ function add(index) {
   }});
 
 
+    contactsTable2Load();
+    principalTable2Load();
 
 
 }
-//下拉框
+
+
+//下拉框选项
 function dropDownBox(idName,dropListObject) {
-    var str='<div class="btn-group"  style="width:130px"> ' +
-        '    <span type="text" class="form-control"  id="'+idName+'"  style="width:80px">请选择</span>'+
-        '    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:34px;margin-top:-34px;margin-left:75px">' +
+    var str='<div class="btn-group"  style="width:150px"> ' +
+        '    <span type="text" class="form-control"  id="'+idName+'"  style="width:100px">'+dropListObject.ddName+'：</span>'+
+        '    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:34px;margin-top:-34px;margin-left:98px">' +
         '        <span class="caret"></span>' +
         '    </button>' +
         '    <ul class="dropdown-menu" role="menu">';
-    $.each(dropListObject,function (k,v) {
-        str+='<li id="'+k+'"><a href="#">'+v+'</a></li>';
+    $.each(dropListObject.list,function (k,v) {
+      str+='<li ><a href="#" id="'+idName+v.ddsonid+'" onclick="updataDropDownBox(\''+idName+'\',\''+v.ddsonid+'\')">'+v.ddsonName+'</a></li>';
     });
     str+= '</ul></div>';
     return str;
+}
+
+//下拉框赋值
+function updataDropDownBox(idName,boxTitle) {
+    $("#"+idName+"").html($("#"+idName+boxTitle+"").html());
+    $("#"+idName+"").val(''+boxTitle+'');//设置下拉坐标
+
 }
 
 //弹出框
@@ -241,3 +282,102 @@ function cdanger(promptContent) {
         $('#example').popover('hide');
     },2000);
 }
+
+function addTableSon() {
+
+}
+
+
+function contactsTable2Load() {
+
+    $('#contactsTable2').bootstrapTable({
+        url: '/selectContactsAll.xhtml',
+        method:"get",
+        sidePagination:'server',//设置分页
+        showPaginationSwitch:true,//显示据条数选择框
+        pagination:true,//格底部显示分页条
+        showRefresh:true,//刷新按钮
+        showToggle:true,//切换试图
+        showColumns:true,//内容列下拉框
+        pageNumber:1,
+        pageSize:5,
+        pageList:[5,10,15,20],
+        smartDisplay:true,//显示分页或卡视图
+        search:true,//搜索框
+        strictSearch:false,//模糊查询
+        clickToSelect:true,
+        uniqueId:'contacts_Id',//唯一标示列
+        queryParams:function(params) {//传递额外参数
+            return {
+                index:params.offset,
+                size:params.limit,
+                search:params.search,
+            };
+        },
+        onClickRow:function (row,$element) {
+            $("#contacts_id").html(row.contacts_name);
+            $("#contacts_id").val(row.contacts_Id);//赋id的值
+        },
+        columns: [
+            {field: 'contacts_check',radio:true},
+            {field: 'contacts_Id',title: '编号'},
+            {field: 'contacts_name',title: '姓名'},
+            {field: 'contacts_site', title: '地址',},
+            {field: 'contacts_phone', title: '电话',},
+            {field: 'contacts_postcode', title: '邮编',},
+            {field: 'contacts_faxes', title: '传真', },
+            {field: 'contacts_postbox', title: '邮箱',},
+        ]
+    });
+
+}
+
+
+function principalTable2Load() {
+    $('#principalTable2').bootstrapTable({
+        url: '/selectProject_principleAll.xhtml',
+        method:"get",
+        sidePagination:'server',//设置分页
+        showPaginationSwitch:true,//显示据条数选择框
+        pagination:true,//格底部显示分页条
+        showRefresh:true,//刷新按钮
+        showToggle:true,//切换试图
+        showColumns:true,//内容列下拉框
+        pageNumber:1,
+        pageSize:5,
+        pageList:[5,10,15,20],
+        smartDisplay:true,//显示分页或卡视图
+        search:true,//搜索框
+        strictSearch:false,//模糊查询
+        clickToSelect:true,
+        uniqueId:'pp_id',//唯一标示列
+        queryParams:function(params) {//传递额外参数
+            return {
+                index:params.offset,
+                size:params.limit,
+                search:params.search,
+            };
+        },
+        onClickRow:function (row,$element) {
+            $("#principal_id").html(row.pp_id);
+            $("#principal_id").val(row.pp_id);//赋id的值
+        },
+        columns: [
+            {field: 'Project_principle_check',radio:true},
+            {field: 'pp_id',title: '项目负责人编号',class:'info',},
+            {field: 'contacts_id',title: '联系人编号',width:120,},
+            {field: 'enterprise_id', title: '所属企业编号',width:120,},
+        ]
+    });
+}
+
+//下拉框表格
+// function dropDownTable() {
+//     var str='<div class="btn-group"  style="width:150px"> '+
+//             '<span type="text" class="form-control"  id="contacts_Id" style="width:100px">666</span>'+
+//             '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:34px;margin-top:-34px;margin-left:98px">' +
+//             '<span class="caret"></span>' +
+//             '</button>' +
+//             '<ul class="dropdown-menu" role="menu"><table id="contactsTable2"></table></ul></div>';
+//     return str;
+// }

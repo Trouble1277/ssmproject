@@ -1,19 +1,21 @@
 package com.dao;
 
-import com.entity.BlacklistEntity;
+import com.entity.DataDictionaryEntity;
 
 import java.util.List;
 import java.util.Map;
 
-public interface DataDictionarySonDao {
+public interface DataDictionaryDao {
    //查询所有
-    public List<BlacklistEntity> selectBlacklistAll(Map<String, Object> map);
+    public List<DataDictionaryEntity> selectDataDictionaryAll(Map<String, Object> map);
     //增加
-    public void addOneBlacklist(BlacklistEntity blacklistEntity);
+    public void addOneDataDictionary(DataDictionaryEntity dataDictionaryEntity);
     //删除
-    public void delBlacklist(Integer blacklist_Id);
+    public void delDataDictionary(Integer dataDictionary_Id);
     //修改
-    public void updateBlacklist(BlacklistEntity blacklistEntity);
+    public void updateDataDictionary(DataDictionaryEntity dataDictionaryEntity);
     //查询总数
-    public int selectBlacklistAllSum();
+    public int selectDataDictionaryAllSum();
+    //查询单个下拉宽
+    public DataDictionaryEntity selectDataDictionaryOneSon(Integer ddid);
 }

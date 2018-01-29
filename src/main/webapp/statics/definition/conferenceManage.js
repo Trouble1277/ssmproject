@@ -219,7 +219,7 @@ function add(index) {
         '</form>'
     }});
      seleul();
-    conference_documentFile();
+    conference_documentFile("conference_document");
 }
 
 function seleul(){

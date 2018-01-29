@@ -19,8 +19,11 @@
     <script src="/statics/bootstrap/js/bootstrap-table-zh-CN.js"></script>
     <script src="/statics/bootstrap/js/bootstrap-table-editable.js"></script>
     <script src="/statics/definition/activityModel.js"></script>
+    <script src="/statics/definition/modelProgress.js"></script>
+
 </head>
 <body>
+<jsp:include page="modelProgress.jsp"></jsp:include>
 <div>
     <button type="button" id="add" class="btn btn-default navbar-btn">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -44,5 +47,6 @@
 
 </div>
 <table id="activityModelTable"></table>
+<iframe name="targer" style="display: none;"></iframe>
 </body>
 </html>

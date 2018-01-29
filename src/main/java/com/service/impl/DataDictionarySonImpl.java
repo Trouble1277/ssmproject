@@ -1,35 +1,35 @@
 package com.service.impl;
 
-import com.dao.BlacklistDao;
-import com.entity.BlacklistEntity;
+import com.dao.DataDictionarySonDao;
+import com.entity.DataDictionarySonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Service(value="BlacklistServiceImpl")
-public class BlacklistServiceImpl {
+@Service(value="DataDictionarySonServiceImpl")
+public class DataDictionarySonImpl {
     @Autowired
-    BlacklistDao blacklistDao;
+    DataDictionarySonDao DataDictionarySonDao;
     //查询所有
-    public List<BlacklistEntity> selectContactsAll(Map<String, Object> map){
-        return blacklistDao.selectBlacklistAll(map);
+    public List<DataDictionarySonEntity> selectContactsAll(Map<String, Object> map){
+        return DataDictionarySonDao.selectDataDictionarySonAll(map);
     };
     //增加
-    public void addOneBlacklist(BlacklistEntity blacklistEntity){
+    public void addOneDataDictionarySon(DataDictionarySonEntity dataDictionarySonEntity){
 
     };
     //删除
-    public void delBlacklist(Integer blacklist_Id){
+    public void delDataDictionarySon(Integer dataDictionarySon_Id){
 
     };
     //修改
-    public void updateBlacklist(BlacklistEntity blacklistEntity){
+    public void updateDataDictionarySon(DataDictionarySonEntity dataDictionarySonEntity){
 
     };
     //查询总数
-    public int selectBlacklistAllSum(){
-       return blacklistDao.selectBlacklistAllSum();
+    public int selectDataDictionarySonAllSum(){
+       return DataDictionarySonDao.selectDataDictionarySonAllSum();
     };
 }

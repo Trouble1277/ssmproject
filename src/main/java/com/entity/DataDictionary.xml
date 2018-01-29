@@ -2,6 +2,47 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.dao.DataDictionaryDao">
+    <resultMap id="DataDictionaryMap" type="com.entity.DataDictionaryEntity">
+        <result property="ddid" column="ddid"></result>
+        <result property="ddName" column="ddName"></result>
+    </resultMap>
+
+    <resultMap id="DataDictionaryOneSonMap" type="com.entity.DataDictionaryEntity">
+        <result property="ddid" column="ddid"></result>
+        <result property="ddName" column="ddName"></result>
+       <collection property="list" ofType="com.entity.DataDictionarySonEntity">
+          <result property="ddsonid" column="ddsonid"></result>
+          <result property="ddsonName" column="ddsonName"></result>
+       </collection>
+    </resultMap>
+
+
+    <select id="selectDataDictionaryAll" resultMap="DataDictionaryMap" parameterType="java.util.Map">
+        SELECT ddid,ddName FROM Data_Dictionary
+        WHERE 1=1 AND ddName LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectDataDictionaryOneSon" resultMap="DataDictionaryOneSonMap" parameterType="Integer">
+        SELECT dd.ddid,dd.ddName,dds.ddsonid,dds.ddsonName FROM Data_Dictionary dd INNER JOIN Data_Dictioncary_Son dds ON dd.ddid=dds.ddid
+        WHERE dd.ddid=#{ddid}
+    </select>
+
+    <select id="selectDataDictionaryAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM Data_Dictionary
+    </select>
+
+    <insert id="addOneDataDictionary" parameterType="com.entity.DataDictionaryEntity">
+        INSERT INTO Data_Dictionary(ddName)
+        VALUES (${ddName},)
+    </insert>
+    <delete id="delDataDictionary" parameterType="Integer">
+        DELETE FROM Data_Dictionary WHERE ddid=#{ddid}
+    </delete>
+
+    <update id="updateDataDictionary" parameterType="com.entity.DataDictionaryEntity">
+        UPDATE Data_Dictionary set ddName=#{ddName}
+        WHERE ddid=#{ddid}
+    </update>
 
 </mapper>

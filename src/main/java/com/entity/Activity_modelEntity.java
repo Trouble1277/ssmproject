@@ -1,6 +1,6 @@
 package com.entity;
 
-public class Activity_modelEntity{
+public class Activity_modelEntity {
 	private Integer activity_model_id;
 	private String activity_model_url;
 	private String activity_model_remark;

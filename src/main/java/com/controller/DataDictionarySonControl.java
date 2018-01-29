@@ -3,8 +3,8 @@ package com.controller;
 import com.DBUtile.LimitAndSearchUtile;
 import com.DBUtile.StrTransformObject;
 import com.alibaba.fastjson.JSON;
-import com.dao.BlacklistDao;
-import com.entity.BlacklistEntity;
+import com.dao.DataDictionarySonDao;
+import com.entity.DataDictionarySonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,23 +20,23 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class BlacklistControl {
+public class DataDictionarySonControl {
     @Autowired
-    public BlacklistDao backlistDao;
+    public DataDictionarySonDao backlistDao;
 
-    @RequestMapping("blacklist")
+    @RequestMapping("dataDictionarySon")
     public String ContactsJsp(){
-        return "blacklist";
+        return "dataDictionarySon";
     }
 
 
     @ResponseBody
-    @RequestMapping("selectBlacklistAll")
+    @RequestMapping("selectDataDictionarySonAll")
     public void selectContactsAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
 
         Map<String,Object> map=LimitAndSearchUtile.sumCondition(request); //分页和模糊查询
-        List<BlacklistEntity> list=backlistDao.selectBlacklistAll(map);
-        int total=backlistDao.selectBlacklistAllSum();
+        List<DataDictionarySonEntity> list=backlistDao.selectDataDictionarySonAll(map);
+        int total=backlistDao.selectDataDictionarySonAllSum();
         map=new HashMap<String, Object>();
         map.put("rows",list);
         map.put("total",total);
@@ -45,11 +45,11 @@ public class BlacklistControl {
     }
 
     @ResponseBody
-    @RequestMapping("delBlacklist")
+    @RequestMapping("delDataDictionarySon")
     public void delContacts(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        String lP_blacklist_id=request.getParameter("lP_blacklist_id");
+        String ddsonid=request.getParameter("ddsonid");
         try {
-            backlistDao.delBlacklist(Integer.parseInt(lP_blacklist_id));
+            backlistDao.delDataDictionarySon(Integer.parseInt(ddsonid));
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             return;
@@ -58,14 +58,14 @@ public class BlacklistControl {
     }
 
     @ResponseBody
-    @RequestMapping("addOneBlacklist")
+    @RequestMapping("addOneDataDictionarySon")
     public void addOneContacts(HttpServletResponse response, HttpServletRequest request) throws IOException, ParseException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         response.setCharacterEncoding("utf-8");
 
-        BlacklistEntity blacklistEntity=(BlacklistEntity)StrTransformObject.StrTransformObject(BlacklistEntity.class,request);
+        DataDictionarySonEntity dataDictionarySonEntity=(DataDictionarySonEntity)StrTransformObject.StrTransformObject(DataDictionarySonEntity.class,request);
 
         try {
-            backlistDao.addOneBlacklist(blacklistEntity);
+            backlistDao.addOneDataDictionarySon(dataDictionarySonEntity);
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             return;
@@ -74,12 +74,12 @@ public class BlacklistControl {
     }
 
     @ResponseBody
-    @RequestMapping("updateBlacklist")
+    @RequestMapping("updateDataDictionarySon")
     public void updateContacts(HttpServletResponse response, HttpServletRequest request) throws IOException, ParseException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         response.setCharacterEncoding("utf-8");
-        BlacklistEntity blacklistEntity=(BlacklistEntity)StrTransformObject.StrTransformObject(BlacklistEntity.class,request);
+        DataDictionarySonEntity dataDictionarySonEntity=(DataDictionarySonEntity)StrTransformObject.StrTransformObject(DataDictionarySonEntity.class,request);
         try {
-            backlistDao.updateBlacklist(blacklistEntity);
+            backlistDao.updateDataDictionarySon(dataDictionarySonEntity);
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             e.printStackTrace();

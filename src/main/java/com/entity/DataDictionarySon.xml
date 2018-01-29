@@ -2,6 +2,32 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.dao.DataDictionarySonDao">
+    <resultMap id="DataDictionarySonMap" type="com.entity.DataDictionarySonEntity">
+        <result property="ddsonid" column="ddsonid"></result>
+        <result property="ddsonName" column="ddsonName"></result>
+        <result property="ddid" column="ddid"></result>
+    </resultMap>
+    <select id="selectDataDictionarySonAll" resultMap="DataDictionarySonMap" parameterType="java.util.Map">
+        SELECT ddsonid,ddsonName,ddid FROM DataDictionarySon
+        WHERE 1=1 AND ddsonName LIKE '%${search}%' limit ${index},${size}
+    </select>
+
+    <select id="selectDataDictionarySonAllSum" resultType="Integer">
+        SELECT COUNT(*) c FROM DataDictionarySon
+    </select>
+
+    <insert id="addOneDataDictionarySon" parameterType="com.entity.DataDictionarySonEntity">
+        INSERT INTO DataDictionarySon(ddsonName,ddid)
+        VALUES (${ddsonName},'${ddid}','${bl_remark}')
+    </insert>
+    <delete id="delDataDictionarySon" parameterType="Integer">
+        DELETE FROM DataDictionarySon WHERE ddsonid=#{ddsonid}
+    </delete>
+
+    <update id="updateDataDictionarySon" parameterType="com.entity.DataDictionarySonEntity">
+        UPDATE DataDictionarySon set ddsonName=#{ddsonName},ddid=#{ddid}
+        WHERE ddsonid=#{ddsonid}
+    </update>
 
 </mapper>

@@ -19,7 +19,7 @@
 
     <insert id="addOneActivity_model" parameterType="com.entity.Activity_modelEntity">
            INSERT INTO Activity_model(activity_model_url,activity_model_remark)
-           VALUES (${activity_model_url},'${activity_model_remark}','${bl_remark}')
+           VALUES (#{activity_model_url},#{activity_model_remark})
     </insert>
     <delete id="delActivity_model" parameterType="Integer">
          DELETE FROM Activity_model WHERE activity_model_id=#{activity_model_id}

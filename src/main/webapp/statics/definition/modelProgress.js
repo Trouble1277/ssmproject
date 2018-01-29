@@ -1,7 +1,7 @@
 var changeProgessTime = null;
 var uploadName;
-function conference_documentFile(){
-    $("#conference_document").change(function () {
+function conference_documentFile(fileId){
+    $("#"+fileId).change(function () {
         submitForm();
         $("#formModelProgress").submit();
         var data = $("#formModelProgress").serialize();

@@ -3,8 +3,9 @@ package com.controller;
 import com.DBUtile.LimitAndSearchUtile;
 import com.DBUtile.StrTransformObject;
 import com.alibaba.fastjson.JSON;
-import com.dao.DataDictionarySonDao;
-import com.entity.DataDictionarySonEntity;
+import com.dao.DataDictionaryDao;
+import com.entity.DataDictionaryEntity;
+import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,23 +21,37 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class DataDictionarySonControl {
+public class DataDictionaryControl {
     @Autowired
-    public DataDictionarySonDao backlistDao;
+    public DataDictionaryDao backlistDao;
 
-    @RequestMapping("dataDictionarySon")
+    @RequestMapping("dataDictionary")
     public String ContactsJsp(){
-        return "dataDictionarySon";
+        return "dataDictionary";
     }
 
+    @ResponseBody
+    @RequestMapping("selectDataDictionaryOneSon")
+    public void selectDataDictionaryOneSon(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String ddid=request.getParameter("ddid");
+        Map<String,Object> map=new HashMap<String, Object>();
+        DataDictionaryEntity  dda=null;
+        if(!StringUtils.isNullOrEmpty(ddid)){
+            dda=backlistDao.selectDataDictionaryOneSon(Integer.parseInt(ddid));
+        }
+//        map.put("rows",list);
+//        map.put("total",total);
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().write(JSON.toJSONString(dda));
+    }
 
     @ResponseBody
-    @RequestMapping("selectDataDictionarySonAll")
+    @RequestMapping("selectDataDictionaryAll")
     public void selectContactsAll(HttpServletResponse response, HttpServletRequest request) throws IOException {
 
         Map<String,Object> map=LimitAndSearchUtile.sumCondition(request); //分页和模糊查询
-        List<DataDictionarySonEntity> list=backlistDao.selectDataDictionarySonAll(map);
-        int total=backlistDao.selectDataDictionarySonAllSum();
+        List<DataDictionaryEntity> list=backlistDao.selectDataDictionaryAll(map);
+        int total=backlistDao.selectDataDictionaryAllSum();
         map=new HashMap<String, Object>();
         map.put("rows",list);
         map.put("total",total);
@@ -45,11 +60,11 @@ public class DataDictionarySonControl {
     }
 
     @ResponseBody
-    @RequestMapping("delDataDictionarySon")
+    @RequestMapping("delDataDictionary")
     public void delContacts(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        String ddsonid=request.getParameter("ddsonid");
+        String ddid=request.getParameter("ddid");
         try {
-            backlistDao.delDataDictionarySon(Integer.parseInt(ddsonid));
+            backlistDao.delDataDictionary(Integer.parseInt(ddid));
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             return;
@@ -58,14 +73,14 @@ public class DataDictionarySonControl {
     }
 
     @ResponseBody
-    @RequestMapping("addOneDataDictionarySon")
+    @RequestMapping("addOneDataDictionary")
     public void addOneContacts(HttpServletResponse response, HttpServletRequest request) throws IOException, ParseException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         response.setCharacterEncoding("utf-8");
 
-        DataDictionarySonEntity dataDictionarySonEntity=(DataDictionarySonEntity)StrTransformObject.StrTransformObject(DataDictionarySonEntity.class,request);
+        DataDictionaryEntity dataDictionaryEntity=(DataDictionaryEntity)StrTransformObject.StrTransformObject(DataDictionaryEntity.class,request);
 
         try {
-            backlistDao.addOneDataDictionarySon(dataDictionarySonEntity);
+            backlistDao.addOneDataDictionary(dataDictionaryEntity);
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             return;
@@ -74,12 +89,12 @@ public class DataDictionarySonControl {
     }
 
     @ResponseBody
-    @RequestMapping("updateDataDictionarySon")
+    @RequestMapping("updateDataDictionary")
     public void updateContacts(HttpServletResponse response, HttpServletRequest request) throws IOException, ParseException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         response.setCharacterEncoding("utf-8");
-        DataDictionarySonEntity dataDictionarySonEntity=(DataDictionarySonEntity)StrTransformObject.StrTransformObject(DataDictionarySonEntity.class,request);
+        DataDictionaryEntity dataDictionaryEntity=(DataDictionaryEntity)StrTransformObject.StrTransformObject(DataDictionaryEntity.class,request);
         try {
-            backlistDao.updateDataDictionarySon(dataDictionarySonEntity);
+            backlistDao.updateDataDictionary(dataDictionaryEntity);
         }catch (Exception e){
             response.getWriter().write("{\"success\":\"defeated\"}");
             e.printStackTrace();

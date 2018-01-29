@@ -66,6 +66,7 @@ public class ProjectControl {
         try {
             projectDao.addOneProject(ProjectEntity);
         }catch (Exception e){
+            e.printStackTrace();
             response.getWriter().write("{\"success\":\"defeated\"}");
             return;
         }
